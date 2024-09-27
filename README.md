@@ -14,16 +14,20 @@ API design was done
 using [Align-Define-Design Process](https://blog.stoplight.io/aligning-on-your-api-design-using-jobs-to-be-done).
 
 ### User stories
-
 | Story ID | When... (Triggering Situation)        | I want to...    (Digital Capability)                   | So I can...    (Outcome)                                    |
 |----------|---------------------------------------|--------------------------------------------------------|-------------------------------------------------------------|
-| 1        | I want to find students               | Search students by student ID, first name and lastname | Confirm their details                                       |
+| 1        | I want to find students               | Search students by student ID, first name and lastname | Confirm their details and set up an appointment             |
 | 2        | I want to find teachers               | Search teachers by emplID, first name and lastname     | Confirm their details                                       |
 | 3        | I want to find students for a teacher | View number of students for a teacher                  | Determine if the class size is too big                      |
 | 4        | I want to find classes                | Search for a class                                     | Confirm that's the class I need to enroll in                |
 | 5        | I want to find instructor for a class | Search for the instructor for the class                | So I can set up an appointment to discuss course assignment |
 
 ### Actives
+ Digital Capability  | Activity         | Participants          | Description                                                         |
+|---------------------|------------------|-----------------------|---------------------------------------------------------------------|
+| Search Students by student ID, first name and lastname | Browse for Books | Teacher               | Search for students                                                 |
+| Search Students     | Browse for Books | Teacher               | Search for students                                                 |
+| Search Students     | Browse for Books | Teacher               | Search for students                                                 |
 
 ### Activity Steps
 
