@@ -16,6 +16,33 @@ API design was done using [Align-Define-Design Process](https://blog.stoplight.i
 | 2        | I want to find instructors                | Search instructors emplID, first name and lastname     | Confirm their details                      |
 | 3        | I want to find students for an instructor | View a book’s details and reviews                      | Determine if the book is of interest to me |
 
+### Actives
+
+### Activity Steps
+
+### API Resources and Profiles
+#### Modeled Resources
+
+##### Student
+
+| Property Name | Description                   |
+|---------------|-------------------------------|
+| title         | The book title                |
+| isbn          | The unique ISBN of the book   |
+| authors       | List of Book Author resources |
+
+#### Curricular API 
+
+### Curricular API Design 
+| Resource Path                      | Operation Name       | HTTP Method | Description                               | Request Details          | Response Details | Response Code(s) |
+|------------------------------------|----------------------|-------------|-------------------------------------------|--------------------------|------------------|------------------|
+| /books                             | listBooks()          | GET         | List books by category or release date    | categoryId   releaseDate | Books[]          | 200              |
+| /books/search                      | searchBooks()        | POST        | Search for books by author, title         | searchQuery              | Books[]          | 200              |
+| /carts/{cartId}                    | viewCart()           | GET         | View the current cart and total           | cartId                   | Cart             | 200, 404         |
+| /carts/{cartId}                    | clearCart()          | DELETE      | Remove all books from the customer's cart | cartId                   | Cart             | 204, 404         |
+| /carts/{cartId}/items              | addItemToCart()      | POST        | Add a book to the customer's cart         | cartId                   | Cart             | 201, 400         |
+| /carts/{cartId}/items/{cartItemId} | removeItemFromCart() | DELETE      | Remove a book from the customer's cart    | cartId   cartItemId      | Cart             | 204, 404         |
+| /authors                           | getAuthorDetails()   | GET         | Retrieve the details of an author         | authorId                 | BookAuthor       | 200, 404         |
 
 ## Roadmap
 - [ ] Complete system design
