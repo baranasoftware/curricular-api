@@ -23,11 +23,12 @@ using [Align-Define-Design Process](https://blog.stoplight.io/aligning-on-your-a
 | 5        | I want to find instructor for a class | Search for the instructor for the class                | So I can set up an appointment to discuss course assignment |
 
 ### Actives
- Digital Capability  | Activity         | Participants          | Description                                                         |
-|---------------------|------------------|-----------------------|---------------------------------------------------------------------|
-| Search Students by student ID, first name and lastname | Browse for Books | Teacher               | Search for students                                                 |
-| Search Students     | Browse for Books | Teacher               | Search for students                                                 |
-| Search Students     | Browse for Books | Teacher               | Search for students                                                 |
+ Digital Capability                                     | Activity                    | Participants        | Description                                            |
+|--------------------------------------------------------|-----------------------------|---------------------|--------------------------------------------------------|
+| Search Students by student ID, first name and lastname | Search Students             | Teacher, Admin User | Search for students by student Id, firstname, lastname |
+| Search teachers by emplID, first name and lastname     | Search Teachers             | Teacher, Admin User | Search for teachers by empl Id, firstname, lastname    |
+| View number of students for a teacher                  | Search Teacher              | Teacher, Admin User | Search for teachers by empl Id, firstname, lastname    |
+| View number of students for a teacher                  | Search Students for Teacher | Teacher, Admin User | Search for students for the teacher                    |
 
 ### Activity Steps
 
