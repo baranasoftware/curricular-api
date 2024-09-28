@@ -2,12 +2,14 @@
 
 The design and implementation of a REST API for student and course data for Higher Ed. Also includes how to implement a
 data-pipeline for mostly static data. This shows how to start with users' needs (user stories) and use that to design
-the API specification, and finally the implementation. This API design focus on some of the key resources such as `/students`, `/teachers`, `/classes` 
-and can be extended to include other resources such as `/universities` (if the institution consists of multiple universities such as [Universities of Wisconsin](https://www.wisconsin.edu/), that has [13 universities](https://www.wisconsin.edu/campuses/)), `/enrollments`, `/schools`, `/courses` etc..
+the API specification, and finally the implementation. This API design focus on some of the key resources such as
+`/students`, `/teachers`, `/classes`
+and can be extended to include other resources such as `/universities` (if the institution consists of multiple
+universities such as [Universities of Wisconsin](https://www.wisconsin.edu/), that
+has [13 universities](https://www.wisconsin.edu/campuses/)), `/enrollments`, `/schools`, `/courses` etc..
 
 Feel free to reach us at contact@baranasoftware.com to see how we can collaborate in your API design and implementation
 effort.
-
 
 ## System Design
 
@@ -59,14 +61,14 @@ Provide access to students, teachers, classes, courses and appointment data
 
 #### API Resources
 
-| Operation Name          | Description                                            | Participants        | Resource(s) | Emitted Events    | Operation Details                                               | Traits               |
-|-------------------------|--------------------------------------------------------|---------------------|-------------|-------------------|-----------------------------------------------------------------|----------------------|
-| searchStudents()        | Search Students by student ID, first name and lastname | Teacher, Admin User | Student     | Students.Searched | __Request Parameters:__ searchQuery    __Returns:__   Student[] | safe   / synchronous |
-| viewTeachers()          | View available teachers                                | Teacher, Admin User | Student     | Teacher.Viewed    | __Request Parameters:__ teacherId    __Returns:__   Teacher     | safe   / synchronous |
-| searchTeachers()        | Search Teachers by empl ID, first name and lastname    | Teacher, Admin User | Teacher     | Teachers.Searched | __Request Parameters:__ searchQuery    __Returns:__   Teacher[] | safe   / synchronous |
-| viewClasses()           | View Classes by class number, name                     | Student             | Class       | Classes.Searched  | __Request Parameters:__ searchQuery    __Returns:__   Claas[]   | safe   / synchronous |
-| viewTeacherForClass()   | View Class by teacher                                  | Student             | Teacher     | Teacher.Viewed    | __Request Parameters:__ searchQuery    __Returns:__   Claas[]   |                      |
-| viewStudentForTeacher() | View Students for teacher                              |                     |             |                   |                                                                 |                      |
+| Operation Name           | Description                                            | Participants        | Resource(s) | Emitted Events    | Operation Details                                               | Traits               |
+|--------------------------|--------------------------------------------------------|---------------------|-------------|-------------------|-----------------------------------------------------------------|----------------------|
+| searchStudents()         | Search Students by student ID, first name and lastname | Teacher, Admin User | Student     | Students.Searched | __Request Parameters:__ searchQuery    __Returns:__   Student[] | safe   / synchronous |
+| viewTeachers()           | View available teachers                                | Teacher, Admin User | Student     | Teacher.Viewed    | __Request Parameters:__     __Returns:__   Teacher[]            | safe   / synchronous |
+| searchTeachers()         | Search Teachers by empl ID, first name and lastname    | Teacher, Admin User | Teacher     | Teachers.Searched | __Request Parameters:__ searchQuery    __Returns:__   Teacher[] | safe   / synchronous |
+| viewClasses()            | View Classes by class number, name                     | Student             | Class       | Classes.Searched  | __Request Parameters:__     __Returns:__   Claas[]              | safe   / synchronous |
+| viewTeacherForClass()    | View Class by teacher                                  | Student             | Teacher     | Teacher.Viewed    | __Request Parameters:__ classId    __Returns:__   Teacher       | safe   / synchronous |
+| viewStudentsForTeacher() | View Students for teacher                              | Teacher, Admin User | Student     | Students.Viewed   | __Request Parameters:__ teacherId    __Returns:__   Student[]   | safe   / synchronous |
 
 #### Modeled Resources
 
