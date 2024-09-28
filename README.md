@@ -1,11 +1,16 @@
+# Design and Implementation of a REST API for Curricular data in Higher Education
 The design and implementation of a REST API for student and course data for Higher Ed. Also includes how to implement a
-data-pipeline for
-mostly static data.
+data-pipeline for mostly static data. This shows how to start with users' needs (user stories) and use that to design the API 
+specification, and finally the implementation.
+
+Feel free to reach out us at contact@baranasoftware.com to see how we can collaborate in your API design and implementation effort.
 
 ## System Design
+
 [Design of a REST API for Curricular data](https://github.com/baranasoftware/system-design/blob/main/edu-api.md)
 
 ## Running Locally
+
 TODO
 
 ## API Design
@@ -29,18 +34,35 @@ using [Align-Define-Design Process](https://blog.stoplight.io/aligning-on-your-a
 |--------------------------------------------------------|-------------------------------|---------------------|--------------------------------------------------------|
 | Search Students by student ID, first name and lastname | Search Students               | Teacher, Admin User | Search for students by student Id, firstname, lastname |
 | Search teachers by emplID, first name and lastname     | Search Teachers               | Teacher, Admin User | Search for teachers by empl Id, firstname, lastname    |
-| View number of students for a teacher                  | Search Teacher                | Teacher, Admin User | Search for teachers by empl Id, firstname, lastname    |
 | View number of students for a teacher                  | Search Students for Teacher   | Teacher, Admin User | View students for the teacher                          |
 | Book an appointment                                    | Search Classes                | Student             | Search classes by class number, name                   |                        |
 | Book an appointment                                    | Search Teachers for the Class | Student             | Search for a teacher by class                          |
 
 ### Activity Steps
 
-| Digital Capability                                     | Activity        | Activity Step   | Participants        | Description                                            |
-|--------------------------------------------------------|-----------------|-----------------|---------------------|--------------------------------------------------------|
-| Search Students by student ID, first name and lastname | Search Students | Search Students | Teacher, Admin User | Search for students by student Id, firstname, lastname |
+| Digital Capability                                     | Activity                      | Activity Step              | Participants        | Description                                            |
+|--------------------------------------------------------|-------------------------------|----------------------------|---------------------|--------------------------------------------------------|
+| Search Students by student ID, first name and lastname | Search Students               | Search Students            | Teacher, Admin User | Search for students by student Id, firstname, lastname |
+| Search teachers by emplID, first name and lastname     | Search Teachers               | Search Teachers            | Teacher, Admin User | Search for teachers by empl Id, firstname, lastname    |
+| View number of students for a teacher                  | Search Students for Teacher   | View Teachers              | Teacher, Admin User | Search for teachers by empl Id, firstname, lastname    |
+| View number of students for a teacher                  | Search Students for Teacher   | View Students for Teacher  | Teacher, Admin User | View students for the teacher                          |
+| Book an appointment                                    | Search Classes                | View Classes               | Student             | Search classes by class number, name                   |
+| Book an appointment                                    | Search Teachers for the Class | View teacher for the class | Student             | Search class by teacher                                |
 
-### API Resources and Profiles
+### API Resources and Models
+
+Provide access to students, teachers, classes, courses and appointment data
+
+#### API Resources
+
+| Operation Name   | Description                                           | Participants        | Resource(s) | Emitted Events    | Operation Details                                               | Traits               |
+|------------------|-------------------------------------------------------|---------------------|-------------|-------------------|-----------------------------------------------------------------|----------------------|
+| searchStudents() | Search Students by student ID, first name and lastname | Teacher, Admin User | Student     | Students.Searched | __Request Parameters:__ searchQuery    __Returns:__   Student[] | safe   / synchronous |
+| viewTeachers()   | View available teachers                               | Teacher, Admin User | Student     | Students.Searched | __Request Parameters:__ searchQuery    __Returns:__   Student[] | safe   / synchronous |
+| searchTeachers() | Search Teachers by empl ID, first name and lastname   | Teacher, Admin User | Teacher     | Teachers.Searched | __Request Parameters:__ searchQuery    __Returns:__   Teacher[] | safe   / synchronous |
+| searchClasses()  | Search Classes by class number, name                  | Student             | Class       | Classes.Searched  | __Request Parameters:__ searchQuery    __Returns:__   Claas[]   | safe   / synchronous |
+|                  |                                                       |                     |             |                   |                                                                 |                      |
+|                  |                                                       |                     |             |                   |                                                                 |                      |
 
 #### Modeled Resources
 
@@ -68,7 +90,8 @@ using [Align-Define-Design Process](https://blog.stoplight.io/aligning-on-your-a
 
 ## Roadmap
 
+- [ ] Complete API design
 - [ ] Complete system design
     - Include steps to build SQLite data for static data and using
+- [ ] Add ability turn locally. Include instructions to test the flow
 - [ ] Add Terraform for AWS deployment
-- [ ] Add ability turn locally 
