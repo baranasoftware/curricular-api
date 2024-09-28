@@ -34,7 +34,7 @@ using [Align-Define-Design Process](https://blog.stoplight.io/aligning-on-your-a
 | 5        | I want to find more details about the class | Book an appointment                                    | So I can set up an appointment to discuss course assignment |
 | 4        | I want to enroll in a class                 | Search for a class                                     | Confirm that's the class I need to enroll in                |
 
-### Actives
+### Activities
 
 | Digital Capability                                     | Activity                    | Participants        | Description                                            |
 |--------------------------------------------------------|-----------------------------|---------------------|--------------------------------------------------------|
@@ -70,15 +70,41 @@ Provide access to students, teachers, classes, courses and appointment data
 | getTeachersForClass()   | View Classes by teachers                               | Student             | Teacher     | Teacher.Viewed    | __Request Parameters:__ classId    __Returns:__   Teacher[]     | safe   / synchronous |
 | getStudentsForTeacher() | View Students for teacher                              | Teacher, Admin User | Student     | Students.Viewed   | __Request Parameters:__ teacherId    __Returns:__   Student[]   | safe   / synchronous |
 
-#### Modeled Resources
+#### Modeled Resources   
+
+##### Address 
+| Property Name  | Description                    |
+|----------------|--------------------------------|
+| addressType    | If this is the primary address |
+| streetAddress1 | Street 1                       |
+| streetAddress2 | Street 2                       |
+| city           | City                           |
+| state          | State                          |
+| zipCode        | ZipCode                        |
+| country        | County                         |
 
 ##### Student
 
-| Property Name | Description                   |
-|---------------|-------------------------------|
-| title         | The book title                |
-| isbn          | The unique ISBN of the book   |
-| authors       | List of Book Author resources |
+| Property Name | Description                                       |
+|---------------|---------------------------------------------------|
+| studentId     | Unique identifier identifying the student         |
+| firstName     | Student first name                                |
+| lastName      | Student last name                                 |
+| address[]     | Student addresses                                 |
+| birthDate     | Student birthdate                                 |
+| ageInYears    | Student's age in years (directly consumable data) |
+| residency     | Student residency status                          |
+ 
+##### Teacher          
+
+| Property Name | Description                                          |
+|---------------|------------------------------------------------------|
+| emplId        | Unique employment identifier identifying the teacher |
+| firstName     | Teacher first name                                   |
+| lastName      | Teacher last name                                    |
+| address[]     | Teacher addresses                                    |
+| birthDate     | Teacher birthdate                                    |
+| ageInYears    | Teacher's age in years (directly consumable data)    |
 
 #### Curricular API
 
@@ -92,7 +118,7 @@ Provide access to students, teachers, classes, courses and appointment data
 | /teachers/search               | searchTeachers()        | POST        | Search for teachers by empl id, first/last name    | searchQuery     | Teacher[]        | 200              |
 | /classes                       | getClasses()            | GET         | View classes                                       |                 | Class[]          | 200              |
 | /classes/{classId}/teachers    | getTeachersForClass()   | GET         | View teachers for a class                          | classId         | Teacher[]        | 200              |
-| /teachers/{teacherId}/studnets | getStudentsForTeacher() | GET         | View students for a teacher                        | teacherId       | Students[]       | 200              |
+| /teachers/{teacherId}/students | getStudentsForTeacher() | GET         | View students for a teacher                        | teacherId       | Students[]       | 200              |
 
 ## Roadmap
 
