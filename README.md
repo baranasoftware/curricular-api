@@ -8,6 +8,7 @@ and can be extended to include other resources such as `/universities` (if the i
 Feel free to reach us at contact@baranasoftware.com to see how we can collaborate in your API design and implementation
 effort.
 
+
 ## System Design
 
 [Design of a REST API for Curricular data](https://github.com/baranasoftware/system-design/blob/main/edu-api.md)
