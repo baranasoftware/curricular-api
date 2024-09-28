@@ -84,15 +84,15 @@ Provide access to students, teachers, classes, courses and appointment data
 
 ### Curricular API Design
 
-| Resource Path                  | Operation Name          | HTTP Method | Description                                       | Request Details | Response Details | Response Code(s) |
-|--------------------------------|-------------------------|-------------|---------------------------------------------------|-----------------|------------------|-------------|
-| /students                      | getStudents()           | GET         | View students                                     |                 | Students[]       | 200         |
-| /students/search               | searchStudents()        | POST        | Search for students by student id, first/last name | searchQuery     | Students[]       | 200         |
-| /teachers                      | getTeachers()           | GET         | View teachers                                     |                 | Teacher[]        | 200         |
-| /teachers/search               | searchTeachers()        | POST        | Search for teachers by empl id, first/last name   | searchQuery     | Teacher[]        | 200         |
-| /classes                       | getClasses()            | GET         | View classes                                      |                 | Class[]          | 200         |
-| /classes/{classId}/teachers    | getTeachersForClass()   | GET         | View teachers for a class                         | classId         | Teacher[]        | 200         |
-| /teachers/{teacherId}/studnets | getStudentsForTeacher() | GET         | View students for a teacher                       | teacherId       | Students[]       | 200         |
+| Resource Path                  | Operation Name          | HTTP Method | Description                                        | Request Details | Response Details | Response Code(s) |
+|--------------------------------|-------------------------|-------------|----------------------------------------------------|-----------------|------------------|------------------|
+| /students                      | getStudents()           | GET         | View students                                      |                 | Students[]       | 200              |
+| /students/search               | searchStudents()        | POST        | Search for students by student id, first/last name | searchQuery     | Students[]       | 200              |
+| /teachers                      | getTeachers()           | GET         | View teachers                                      |                 | Teacher[]        | 200              |
+| /teachers/search               | searchTeachers()        | POST        | Search for teachers by empl id, first/last name    | searchQuery     | Teacher[]        | 200              |
+| /classes                       | getClasses()            | GET         | View classes                                       |                 | Class[]          | 200              |
+| /classes/{classId}/teachers    | getTeachersForClass()   | GET         | View teachers for a class                          | classId         | Teacher[]        | 200              |
+| /teachers/{teacherId}/studnets | getStudentsForTeacher() | GET         | View students for a teacher                        | teacherId       | Students[]       | 200              |
 
 ## Roadmap
 
