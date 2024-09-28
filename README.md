@@ -1,9 +1,12 @@
 # Design and Implementation of a REST API for Curricular data in Higher Education
-The design and implementation of a REST API for student and course data for Higher Ed. Also includes how to implement a
-data-pipeline for mostly static data. This shows how to start with users' needs (user stories) and use that to design the API 
-specification, and finally the implementation.
 
-Feel free to reach out us at contact@baranasoftware.com to see how we can collaborate in your API design and implementation effort.
+The design and implementation of a REST API for student and course data for Higher Ed. Also includes how to implement a
+data-pipeline for mostly static data. This shows how to start with users' needs (user stories) and use that to design
+the API specification, and finally the implementation. This API design focus on some of the key resources such as `/students`, `/teachers`, `/classes` 
+and can be extended to include other resources such as `/universities` (if the institution consists of multiple universities such as [Universities of Wisconsin](https://www.wisconsin.edu/), that has [13 universities](https://www.wisconsin.edu/campuses/)), `/enrollments`, `/schools`, `/courses` etc..
+
+Feel free to reach us at contact@baranasoftware.com to see how we can collaborate in your API design and implementation
+effort.
 
 ## System Design
 
@@ -30,24 +33,24 @@ using [Align-Define-Design Process](https://blog.stoplight.io/aligning-on-your-a
 
 ### Actives
 
-| Digital Capability                                     | Activity                      | Participants        | Description                                            |
-|--------------------------------------------------------|-------------------------------|---------------------|--------------------------------------------------------|
-| Search Students by student ID, first name and lastname | Search Students               | Teacher, Admin User | Search for students by student Id, firstname, lastname |
-| Search teachers by emplID, first name and lastname     | Search Teachers               | Teacher, Admin User | Search for teachers by empl Id, firstname, lastname    |
-| View number of students for a teacher                  | Search Students for Teacher   | Teacher, Admin User | View students for the teacher                          |
-| Book an appointment                                    | Search Classes                | Student             | Search classes by class number, name                   |                        |
-| Book an appointment                                    | Search Teachers for the Class | Student             | Search for a teacher by class                          |
+| Digital Capability                                     | Activity                    | Participants        | Description                                            |
+|--------------------------------------------------------|-----------------------------|---------------------|--------------------------------------------------------|
+| Search Students by student ID, first name and lastname | Search Students             | Teacher, Admin User | Search for students by student Id, firstname, lastname |
+| Search teachers by emplID, first name and lastname     | Search Teachers             | Teacher, Admin User | Search for teachers by empl Id, firstname, lastname    |
+| View number of students for a teacher                  | View Students for Teacher   | Teacher, Admin User | View students for the teacher                          |
+| Book an appointment                                    | View Classes                | Student             | Search classes by class number, name                   |                        |
+| Book an appointment                                    | View Teachers for the Class | Student             | Search for a teacher by class                          |
 
 ### Activity Steps
 
-| Digital Capability                                     | Activity                      | Activity Step              | Participants        | Description                                            |
-|--------------------------------------------------------|-------------------------------|----------------------------|---------------------|--------------------------------------------------------|
-| Search Students by student ID, first name and lastname | Search Students               | Search Students            | Teacher, Admin User | Search for students by student Id, firstname, lastname |
-| Search teachers by emplID, first name and lastname     | Search Teachers               | Search Teachers            | Teacher, Admin User | Search for teachers by empl Id, firstname, lastname    |
-| View number of students for a teacher                  | Search Students for Teacher   | View Teachers              | Teacher, Admin User | Search for teachers by empl Id, firstname, lastname    |
-| View number of students for a teacher                  | Search Students for Teacher   | View Students for Teacher  | Teacher, Admin User | View students for the teacher                          |
-| Book an appointment                                    | Search Classes                | View Classes               | Student             | Search classes by class number, name                   |
-| Book an appointment                                    | Search Teachers for the Class | View teacher for the class | Student             | Search class by teacher                                |
+| Digital Capability                                     | Activity                    | Activity Step              | Participants        | Description                                            |
+|--------------------------------------------------------|-----------------------------|----------------------------|---------------------|--------------------------------------------------------|
+| Search Students by student ID, first name and lastname | Search Students             | Search Students            | Teacher, Admin User | Search for students by student Id, firstname, lastname |
+| Search teachers by emplID, first name and lastname     | Search Teachers             | Search Teachers            | Teacher, Admin User | Search for teachers by empl Id, firstname, lastname    |
+| View number of students for a teacher                  | View Students for Teacher   | View Teachers              | Teacher, Admin User | Search for teachers by empl Id, firstname, lastname    |
+| View number of students for a teacher                  | Search Students for Teacher | View Students for Teacher  | Teacher, Admin User | View students for the teacher                          |
+| Book an appointment                                    | View Classes                | View Classes               | Student             | Search classes by class number, name                   |
+| Book an appointment                                    | View Teachers for the Class | View teacher for the class | Student             | Search class by teacher                                |
 
 ### API Resources and Models
 
@@ -55,14 +58,14 @@ Provide access to students, teachers, classes, courses and appointment data
 
 #### API Resources
 
-| Operation Name   | Description                                           | Participants        | Resource(s) | Emitted Events    | Operation Details                                               | Traits               |
-|------------------|-------------------------------------------------------|---------------------|-------------|-------------------|-----------------------------------------------------------------|----------------------|
-| searchStudents() | Search Students by student ID, first name and lastname | Teacher, Admin User | Student     | Students.Searched | __Request Parameters:__ searchQuery    __Returns:__   Student[] | safe   / synchronous |
-| viewTeachers()   | View available teachers                               | Teacher, Admin User | Student     | Students.Searched | __Request Parameters:__ searchQuery    __Returns:__   Student[] | safe   / synchronous |
-| searchTeachers() | Search Teachers by empl ID, first name and lastname   | Teacher, Admin User | Teacher     | Teachers.Searched | __Request Parameters:__ searchQuery    __Returns:__   Teacher[] | safe   / synchronous |
-| searchClasses()  | Search Classes by class number, name                  | Student             | Class       | Classes.Searched  | __Request Parameters:__ searchQuery    __Returns:__   Claas[]   | safe   / synchronous |
-|                  |                                                       |                     |             |                   |                                                                 |                      |
-|                  |                                                       |                     |             |                   |                                                                 |                      |
+| Operation Name          | Description                                            | Participants        | Resource(s) | Emitted Events    | Operation Details                                               | Traits               |
+|-------------------------|--------------------------------------------------------|---------------------|-------------|-------------------|-----------------------------------------------------------------|----------------------|
+| searchStudents()        | Search Students by student ID, first name and lastname | Teacher, Admin User | Student     | Students.Searched | __Request Parameters:__ searchQuery    __Returns:__   Student[] | safe   / synchronous |
+| viewTeachers()          | View available teachers                                | Teacher, Admin User | Student     | Teacher.Viewed    | __Request Parameters:__ teacherId    __Returns:__   Teacher     | safe   / synchronous |
+| searchTeachers()        | Search Teachers by empl ID, first name and lastname    | Teacher, Admin User | Teacher     | Teachers.Searched | __Request Parameters:__ searchQuery    __Returns:__   Teacher[] | safe   / synchronous |
+| viewClasses()           | View Classes by class number, name                     | Student             | Class       | Classes.Searched  | __Request Parameters:__ searchQuery    __Returns:__   Claas[]   | safe   / synchronous |
+| viewTeacherForClass()   | View Class by teacher                                  | Student             | Teacher     | Teacher.Viewed    | __Request Parameters:__ searchQuery    __Returns:__   Claas[]   |                      |
+| viewStudentForTeacher() | View Students for teacher                              |                     |             |                   |                                                                 |                      |
 
 #### Modeled Resources
 
