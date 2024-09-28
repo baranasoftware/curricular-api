@@ -20,17 +20,22 @@ using [Align-Define-Design Process](https://blog.stoplight.io/aligning-on-your-a
 | 2        | I want to find teachers               | Search teachers by emplID, first name and lastname     | Confirm their details                                       |
 | 3        | I want to find students for a teacher | View number of students for a teacher                  | Determine if the class size is too big                      |
 | 4        | I want to find classes                | Search for a class                                     | Confirm that's the class I need to enroll in                |
-| 5        | I want to find instructor for a class | Search for the instructor for the class                | So I can set up an appointment to discuss course assignment |
+| 5        | I want to find teacher for a class    | Search for the teacher for the class                   | So I can set up an appointment to discuss course assignment |
 
 ### Actives
- Digital Capability                                     | Activity                    | Participants        | Description                                            |
-|--------------------------------------------------------|-----------------------------|---------------------|--------------------------------------------------------|
+ Digital Capability                                     | Activity                    | Participants        | Description                                          |
+|--------------------------------------------------------|-----------------------------|---------------------|------------------------------------------------------|
 | Search Students by student ID, first name and lastname | Search Students             | Teacher, Admin User | Search for students by student Id, firstname, lastname |
-| Search teachers by emplID, first name and lastname     | Search Teachers             | Teacher, Admin User | Search for teachers by empl Id, firstname, lastname    |
-| View number of students for a teacher                  | Search Teacher              | Teacher, Admin User | Search for teachers by empl Id, firstname, lastname    |
-| View number of students for a teacher                  | Search Students for Teacher | Teacher, Admin User | Search for students for the teacher                    |
+| Search teachers by emplID, first name and lastname     | Search Teachers             | Teacher, Admin User | Search for teachers by empl Id, firstname, lastname  |
+| View number of students for a teacher                  | Search Teacher              | Teacher, Admin User | Search for teachers by empl Id, firstname, lastname  |
+| View number of students for a teacher                  | Search Students for Teacher | Teacher, Admin User | Search for students for the teacher                  |
+| Search for a class                                     | Search Classes              | Student, Admin User | Search for classes by class name                     |
+| Search for the teacher for the class                   | Search Teachers             | |
 
 ### Activity Steps
+| Digital Capability | Activity         | Activity Step          | Participants          | Description                                   |
+|--------------------|------------------|------------------------|-----------------------|-----------------------------------------------|
+| Place an Order     | Browse for Books | List Books             | Customer, Call Center | List books by category or release date        |
 
 ### API Resources and Profiles
 
