@@ -25,7 +25,6 @@ API design was done
 using [Align-Define-Design Process](https://blog.stoplight.io/aligning-on-your-api-design-using-jobs-to-be-done).
 
 ### User stories
-
 | Story ID | When... (Triggering Situation)              | I want to...    (Digital Capability)                   | So I can...    (Outcome)                                    |
 |----------|---------------------------------------------|--------------------------------------------------------|-------------------------------------------------------------|
 | 1        | I want to find students                     | Search students by student ID, first name and lastname | Confirm their details and set up an appointment             |
@@ -35,7 +34,6 @@ using [Align-Define-Design Process](https://blog.stoplight.io/aligning-on-your-a
 | 4        | I want to enroll in a class                 | Search for a class                                     | Confirm that's the class I need to enroll in                |
 
 ### Activities
-
 | Digital Capability                                     | Activity                    | Participants        | Description                                            |
 |--------------------------------------------------------|-----------------------------|---------------------|--------------------------------------------------------|
 | Search Students by student ID, first name and lastname | Search Students             | Teacher, Admin User | Search for students by student Id, firstname, lastname |
@@ -45,7 +43,6 @@ using [Align-Define-Design Process](https://blog.stoplight.io/aligning-on-your-a
 | Book an appointment                                    | View Teachers for the Class | Student             | Search for a teacher by class                          |
 
 ### Activity Steps
-
 | Digital Capability                                     | Activity                    | Activity Step              | Participants        | Description                                            |
 |--------------------------------------------------------|-----------------------------|----------------------------|---------------------|--------------------------------------------------------|
 | Search Students by student ID, first name and lastname | Search Students             | Search Students            | Teacher, Admin User | Search for students by student Id, firstname, lastname |
@@ -60,7 +57,6 @@ using [Align-Define-Design Process](https://blog.stoplight.io/aligning-on-your-a
 Provide access to students, teachers, classes, courses and appointment data
 
 #### API Resources
-
 | Operation Name          | Description                                            | Participants        | Resource(s) | Emitted Events    | Operation Details                                               | Traits               |
 |-------------------------|--------------------------------------------------------|---------------------|-------------|-------------------|-----------------------------------------------------------------|----------------------|
 | searchStudents()        | Search Students by student ID, first name and lastname | Teacher, Admin User | Student     | Students.Searched | __Request Parameters:__ searchQuery    __Returns:__   Student[] | safe   / synchronous |
@@ -84,27 +80,45 @@ Provide access to students, teachers, classes, courses and appointment data
 | country        | County                         |
 
 ##### Student
-
 | Property Name | Description                                       |
 |---------------|---------------------------------------------------|
 | studentId     | Unique identifier identifying the student         |
 | firstName     | Student first name                                |
 | lastName      | Student last name                                 |
-| address[]     | Student addresses                                 |
+| address[]     | Student addresses (list of `Address`)                                |
 | birthDate     | Student birthdate                                 |
 | ageInYears    | Student's age in years (directly consumable data) |
 | residency     | Student residency status                          |
  
 ##### Teacher          
-
 | Property Name | Description                                          |
 |---------------|------------------------------------------------------|
 | emplId        | Unique employment identifier identifying the teacher |
 | firstName     | Teacher first name                                   |
 | lastName      | Teacher last name                                    |
-| address[]     | Teacher addresses                                    |
+| address[]     | Teacher addresses (list of `Address`)                |
 | birthDate     | Teacher birthdate                                    |
 | ageInYears    | Teacher's age in years (directly consumable data)    |
+
+##### Class
+| Property Name | Description                           |
+|---------------|---------------------------------------|
+| classId       | Unique identifier to identify a class |
+| className     | Name of the class                     |
+| credit        | Credits for this class                |
+| location      | Address of the class location         |
+| dayAndTime    | Day and the time of the class         |
+
+##### Course
+| Property Name | Description                           |
+|---------------|---------------------------------------|
+| courseId      | Unique identifier to identify a class |
+| courseName    | Name of the class                     |
+| termCode      | Term code for this course             |
+| credit        | Total credits for this course         |
+| class[]       | List of courses (of  type `Class`)    |
+
+
 
 #### Curricular API
 
@@ -122,7 +136,7 @@ Provide access to students, teachers, classes, courses and appointment data
 
 ## Roadmap
 
-- [ ] Complete API design
+- [x] Complete API design
 - [ ] Complete system design
     - Include steps to build SQLite data for static data and using
 - [ ] Add ability turn locally. Include instructions to test the flow
