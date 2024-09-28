@@ -3,10 +3,10 @@ data-pipeline for
 mostly static data.
 
 ## System Design
+[Design of a REST API for Curricular data](https://github.com/baranasoftware/system-design/blob/main/edu-api.md)
 
 ## Running Locally
-
-[Design of a REST API for Curricular data](https://github.com/baranasoftware/system-design/blob/main/edu-api.md)
+TODO
 
 ## API Design
 
