@@ -14,28 +14,31 @@ API design was done
 using [Align-Define-Design Process](https://blog.stoplight.io/aligning-on-your-api-design-using-jobs-to-be-done).
 
 ### User stories
-| Story ID | When... (Triggering Situation)        | I want to...    (Digital Capability)                   | So I can...    (Outcome)                                    |
-|----------|---------------------------------------|--------------------------------------------------------|-------------------------------------------------------------|
-| 1        | I want to find students               | Search students by student ID, first name and lastname | Confirm their details and set up an appointment             |
-| 2        | I want to find teachers               | Search teachers by emplID, first name and lastname     | Confirm their details                                       |
-| 3        | I want to find students for a teacher | View number of students for a teacher                  | Determine if the class size is too big                      |
-| 4        | I want to find classes                | Search for a class                                     | Confirm that's the class I need to enroll in                |
-| 5        | I want to find teacher for a class    | Search for the teacher for the class                   | So I can set up an appointment to discuss course assignment |
+
+| Story ID | When... (Triggering Situation)              | I want to...    (Digital Capability)                   | So I can...    (Outcome)                                    |
+|----------|---------------------------------------------|--------------------------------------------------------|-------------------------------------------------------------|
+| 1        | I want to find students                     | Search students by student ID, first name and lastname | Confirm their details and set up an appointment             |
+| 2        | I want to find teachers                     | Search teachers by emplID, first name and lastname     | Confirm their details                                       |
+| 3        | I want to find students for a teacher       | View number of students for a teacher                  | Determine if the class size is too big                      |
+| 5        | I want to find more details about the class | Book an appointment                                    | So I can set up an appointment to discuss course assignment |
+| 4        | I want to enroll in a class                 | Search for a class                                     | Confirm that's the class I need to enroll in                |
 
 ### Actives
- Digital Capability                                     | Activity                    | Participants        | Description                                          |
-|--------------------------------------------------------|-----------------------------|---------------------|------------------------------------------------------|
-| Search Students by student ID, first name and lastname | Search Students             | Teacher, Admin User | Search for students by student Id, firstname, lastname |
-| Search teachers by emplID, first name and lastname     | Search Teachers             | Teacher, Admin User | Search for teachers by empl Id, firstname, lastname  |
-| View number of students for a teacher                  | Search Teacher              | Teacher, Admin User | Search for teachers by empl Id, firstname, lastname  |
-| View number of students for a teacher                  | Search Students for Teacher | Teacher, Admin User | Search for students for the teacher                  |
-| Search for a class                                     | Search Classes              | Student, Admin User | Search for classes by class name                     |
-| Search for the teacher for the class                   | Search Teachers             | |
+
+| Digital Capability                                     | Activity                      | Participants        | Description                                            |
+|--------------------------------------------------------|-------------------------------|---------------------|--------------------------------------------------------|
+| Search Students by student ID, first name and lastname | Search Students               | Teacher, Admin User | Search for students by student Id, firstname, lastname |
+| Search teachers by emplID, first name and lastname     | Search Teachers               | Teacher, Admin User | Search for teachers by empl Id, firstname, lastname    |
+| View number of students for a teacher                  | Search Teacher                | Teacher, Admin User | Search for teachers by empl Id, firstname, lastname    |
+| View number of students for a teacher                  | Search Students for Teacher   | Teacher, Admin User | View students for the teacher                          |
+| Book an appointment                                    | Search Classes                | Student             | Search classes by class number, name                   |                        |
+| Book an appointment                                    | Search Teachers for the Class | Student             | Search for a teacher by class                          |
 
 ### Activity Steps
-| Digital Capability | Activity         | Activity Step          | Participants          | Description                                   |
-|--------------------|------------------|------------------------|-----------------------|-----------------------------------------------|
-| Place an Order     | Browse for Books | List Books             | Customer, Call Center | List books by category or release date        |
+
+| Digital Capability                                     | Activity        | Activity Step   | Participants        | Description                                            |
+|--------------------------------------------------------|-----------------|-----------------|---------------------|--------------------------------------------------------|
+| Search Students by student ID, first name and lastname | Search Students | Search Students | Teacher, Admin User | Search for students by student Id, firstname, lastname |
 
 ### API Resources and Profiles
 
