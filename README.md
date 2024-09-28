@@ -61,14 +61,14 @@ Provide access to students, teachers, classes, courses and appointment data
 
 #### API Resources
 
-| Operation Name           | Description                                            | Participants        | Resource(s) | Emitted Events    | Operation Details                                               | Traits               |
-|--------------------------|--------------------------------------------------------|---------------------|-------------|-------------------|-----------------------------------------------------------------|----------------------|
-| searchStudents()         | Search Students by student ID, first name and lastname | Teacher, Admin User | Student     | Students.Searched | __Request Parameters:__ searchQuery    __Returns:__   Student[] | safe   / synchronous |
-| viewTeachers()           | View available teachers                                | Teacher, Admin User | Student     | Teacher.Viewed    | __Request Parameters:__     __Returns:__   Teacher[]            | safe   / synchronous |
-| searchTeachers()         | Search Teachers by empl ID, first name and lastname    | Teacher, Admin User | Teacher     | Teachers.Searched | __Request Parameters:__ searchQuery    __Returns:__   Teacher[] | safe   / synchronous |
-| viewClasses()            | View Classes by class number, name                     | Student             | Class       | Classes.Searched  | __Request Parameters:__     __Returns:__   Claas[]              | safe   / synchronous |
-| viewTeacherForClass()    | View Class by teacher                                  | Student             | Teacher     | Teacher.Viewed    | __Request Parameters:__ classId    __Returns:__   Teacher       | safe   / synchronous |
-| viewStudentsForTeacher() | View Students for teacher                              | Teacher, Admin User | Student     | Students.Viewed   | __Request Parameters:__ teacherId    __Returns:__   Student[]   | safe   / synchronous |
+| Operation Name          | Description                                            | Participants        | Resource(s) | Emitted Events    | Operation Details                                               | Traits               |
+|-------------------------|--------------------------------------------------------|---------------------|-------------|-------------------|-----------------------------------------------------------------|----------------------|
+| searchStudents()        | Search Students by student ID, first name and lastname | Teacher, Admin User | Student     | Students.Searched | __Request Parameters:__ searchQuery    __Returns:__   Student[] | safe   / synchronous |
+| getTeachers()           | View available teachers                                | Teacher, Admin User | Student     | Teacher.Viewed    | __Request Parameters:__     __Returns:__   Teacher[]            | safe   / synchronous |
+| searchTeachers()        | Search Teachers by empl ID, first name and lastname    | Teacher, Admin User | Teacher     | Teachers.Searched | __Request Parameters:__ searchQuery    __Returns:__   Teacher[] | safe   / synchronous |
+| getClasses()            | View Classes by class number, name                     | Student             | Class       | Classes.Searched  | __Request Parameters:__     __Returns:__   Claas[]              | safe   / synchronous |
+| getTeachersForClass()   | View Classes by teachers                               | Student             | Teacher     | Teacher.Viewed    | __Request Parameters:__ classId    __Returns:__   Teacher[]     | safe   / synchronous |
+| getStudentsForTeacher() | View Students for teacher                              | Teacher, Admin User | Student     | Students.Viewed   | __Request Parameters:__ teacherId    __Returns:__   Student[]   | safe   / synchronous |
 
 #### Modeled Resources
 
@@ -84,15 +84,15 @@ Provide access to students, teachers, classes, courses and appointment data
 
 ### Curricular API Design
 
-| Resource Path                      | Operation Name       | HTTP Method | Description                               | Request Details          | Response Details | Response Code(s) |
-|------------------------------------|----------------------|-------------|-------------------------------------------|--------------------------|------------------|------------------|
-| /books                             | listBooks()          | GET         | List books by category or release date    | categoryId   releaseDate | Books[]          | 200              |
-| /books/search                      | searchBooks()        | POST        | Search for books by author, title         | searchQuery              | Books[]          | 200              |
-| /carts/{cartId}                    | viewCart()           | GET         | View the current cart and total           | cartId                   | Cart             | 200, 404         |
-| /carts/{cartId}                    | clearCart()          | DELETE      | Remove all books from the customer's cart | cartId                   | Cart             | 204, 404         |
-| /carts/{cartId}/items              | addItemToCart()      | POST        | Add a book to the customer's cart         | cartId                   | Cart             | 201, 400         |
-| /carts/{cartId}/items/{cartItemId} | removeItemFromCart() | DELETE      | Remove a book from the customer's cart    | cartId   cartItemId      | Cart             | 204, 404         |
-| /authors                           | getAuthorDetails()   | GET         | Retrieve the details of an author         | authorId                 | BookAuthor       | 200, 404         |
+| Resource Path                  | Operation Name          | HTTP Method | Description                                       | Request Details | Response Details | Response Code(s) |
+|--------------------------------|-------------------------|-------------|---------------------------------------------------|-----------------|------------------|-------------|
+| /students                      | getStudents()           | GET         | View students                                     |                 | Students[]       | 200         |
+| /students/search               | searchStudents()        | POST        | Search for students by student id, first/last name | searchQuery     | Students[]       | 200         |
+| /teachers                      | getTeachers()           | GET         | View teachers                                     |                 | Teacher[]        | 200         |
+| /teachers/search               | searchTeachers()        | POST        | Search for teachers by empl id, first/last name   | searchQuery     | Teacher[]        | 200         |
+| /classes                       | getClasses()            | GET         | View classes                                      |                 | Class[]          | 200         |
+| /classes/{classId}/teachers    | getTeachersForClass()   | GET         | View teachers for a class                         | classId         | Teacher[]        | 200         |
+| /teachers/{teacherId}/studnets | getStudentsForTeacher() | GET         | View students for a teacher                       | teacherId       | Students[]       | 200         |
 
 ## Roadmap
 
