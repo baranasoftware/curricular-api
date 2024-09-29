@@ -1,15 +1,30 @@
 # Design and Implementation of a REST API for Curricular data in Higher Education
 
-The design and implementation of a REST API for student and course data for Higher Ed. Also includes how to implement a
+The design and implementation of a REST API for student and course data for a Higher Education institution. Also includes how to implement a
 data-pipeline for mostly static data. This shows how to start with users' needs (user stories) and use that to design
 the API specification, and finally the implementation. This API design focus on some of the key resources such as
 `/students`, `/teachers`, `/classes`
 and can be extended to include other resources such as `/universities` (if the institution consists of multiple
 universities such as [Universities of Wisconsin](https://www.wisconsin.edu/), that
-has [13 universities](https://www.wisconsin.edu/campuses/)), `/enrollments`, `/schools`, `/courses` etc..
+has [13 universities](https://www.wisconsin.edu/campuses/) or [University of California](https://www.universityofcalifornia.edu/) 
+that consist of [10 campuses](https://www.universityofcalifornia.edu/campuses-locations)), `/enrollments`, `/schools`, `/courses` etc..
 
 Feel free to reach us at contact@baranasoftware.com to see how we can collaborate in your API design and implementation
 effort.
+
+## Tech Stack 
+
+Technologies used in the implementation. `Go` language was used considering its support for building low cost and maintainable
+Cloud Native apps in AWS. `SQLite` was used because this is a high transaction system (500K requests/second) 
+with mostly read only data (write-once a day and read-many times a day).
+               
+* <img src="https://www.vectorlogo.zone/logos/golang/golang-ar21.svg" width="100" alt="Go">
+* <img src="https://www.vectorlogo.zone/logos/json/json-ar21.svg" width="100" alt="JSON">
+* <img src="https://www.vectorlogo.zone/logos/sqlite/sqlite-ar21.svg" alt="SQLite" height="40"/>  
+* <img src="https://www.vectorlogo.zone/logos/terraformio/terraformio-ar21.svg" alt="Terraform" height="50"/>
+* <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-plain-wordmark.svg" height="40" width="52" alt="docker logo"/>
+* <img src="https://www.vectorlogo.zone/logos/amazon_awslambda/amazon_awslambda-ar21.svg" alt="Lambda logo"/>
+
 
 ## System Design
 
@@ -134,6 +149,7 @@ Provide access to students, teachers, classes, courses and appointment data
 ## Roadmap
 
 - [x] Complete API design
+- [x] Include tech stack
 - [ ] Complete system design
     - Include steps to build SQLite data for static data and build a Docker image with static data
     - Include how to merge static data and dynamic data(real time data) to build a single data structure to serve requests
