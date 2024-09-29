@@ -17,13 +17,19 @@ effort.
 Technologies used in the implementation. `Go` language was used considering its support for building low cost and maintainable
 Cloud Native apps in AWS. `SQLite` was used because this is a high transaction system (500K requests/second) 
 with mostly read only data (write-once a day and read-many times a day).
-               
-* <img src="https://www.vectorlogo.zone/logos/golang/golang-ar21.svg" width="100" alt="Go">
-* <img src="https://www.vectorlogo.zone/logos/json/json-ar21.svg" width="100" alt="JSON">
-* <img src="https://www.vectorlogo.zone/logos/sqlite/sqlite-ar21.svg" alt="SQLite" height="40"/>  
-* <img src="https://www.vectorlogo.zone/logos/terraformio/terraformio-ar21.svg" alt="Terraform" height="50"/>
-* <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-plain-wordmark.svg" height="40" width="52" alt="docker logo"/>
-* <img src="https://www.vectorlogo.zone/logos/amazon_awslambda/amazon_awslambda-ar21.svg" alt="Lambda logo"/>
+
+
+* ![Docker](https://img.shields.io/badge/-Docker-eee?style=flat-square&logo=Docker&logoColor=2496ED)
+* ![Go](https://img.shields.io/badge/-Go-eee?style=flat-square&logo=Go&logoColor=00ADD8)
+* ![SQLite](https://img.shields.io/badge/-SQLite-eee?style=flat-square&logo=SQLite&logoColor=003B57)
+* ![JSON](https://img.shields.io/badge/-JSON-eee?style=flat-square&logo=JSON&logoColor=000000)
+* ![Terraform](https://img.shields.io/badge/-Terraform-eee?style=flat-square&logo=Terraform&logoColor=844FBA)
+* ![AWSS3](https://img.shields.io/badge/-AWS%20S3-eee?style=flat-square&logo=amazon-s3&logoColor=569A31)
+* ![AWSDynamodDB](https://img.shields.io/badge/-AWS%20DynamoDB-eee?style=flat-square&logo=amazon-dynamodb&logoColor=4053D6)
+* ![AWSECS](https://img.shields.io/badge/-AWS%20ECS-eee?style=flat-square&logo=amazon-ECS&logoColor=FF9900)
+* ![AWSCW](https://img.shields.io/badge/-AWS%20CloudWatch-eee?style=flat-square&logo=amazon-CloudWatch&logoColor=FF4F8B)
+* ![AWSAPIGW](https://img.shields.io/badge/-AWS%20APIGateway-eee?style=flat-square&logo=amazon-API-Gateway&logoColor=FF4F8B)
+* <img src="https://www.vectorlogo.zone/logos/apigee/apigee-ar21.svg" align="center" alt="Apigee" width="100">
 
 
 ## System Design
