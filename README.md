@@ -119,9 +119,6 @@ Provide access to students, teachers, classes, courses and appointment data
 | class[]       | List of courses (of  type `Class`)    |
 
 
-
-#### Curricular API
-
 ### Curricular API Design
 
 | Resource Path                  | Operation Name          | HTTP Method | Description                                        | Request Details | Response Details | Response Code(s) |
@@ -138,6 +135,7 @@ Provide access to students, teachers, classes, courses and appointment data
 
 - [x] Complete API design
 - [ ] Complete system design
-    - Include steps to build SQLite data for static data and using
+    - Include steps to build SQLite data for static data and build a Docker image with static data
+    - Include how to merge static data and dynamic data(real time data) to build a single data structure to serve requests
 - [ ] Add ability turn locally. Include instructions to test the flow
 - [ ] Add Terraform for AWS deployment
