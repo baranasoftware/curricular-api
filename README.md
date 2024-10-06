@@ -164,4 +164,6 @@ Provide access to students, teachers, classes, courses and appointment data
 - [ ] Implement pagination
 - [ ] Implement batch APIs
 - [ ] Implement filtering(searching): document filter/search query langauge
+  - Do some design around sorting and filtering through body vs query parameters 
+  - https://help.smartsuite.com/en/articles/6963760-sorting-and-filtering-records-in-the-rest-api
 - [ ] Implement sorting
