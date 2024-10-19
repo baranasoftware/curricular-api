@@ -161,8 +161,14 @@ Provide access to students, teachers, classes, courses and appointment data
 - [ ] Add ability turn locally. Include instructions to test the flow
 - [ ] Add Terraform for AWS deployment
 - [ ] Implement pagination
+  - https://www.jsonapi.net/usage/reading/pagination.html
 - [ ] Implement batch APIs
 - [ ] Implement filtering(searching): document filter/search query langauge
   - Do some design around sorting and filtering through body vs query parameters 
   - https://help.smartsuite.com/en/articles/6963760-sorting-and-filtering-records-in-the-rest-api
+  - https://www.jsonapi.net/usage/reading/filtering.html
+  - Implement the parser for the filtering
+- [ ] Implement sparse filed selection 
+  - https://www.jsonapi.net/usage/reading/sparse-fieldset-selection.html
 - [ ] Implement sorting
+  - https://www.jsonapi.net/usage/reading/sorting.html
