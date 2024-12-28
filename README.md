@@ -157,8 +157,7 @@ Provide access to students, teachers, classes, courses and appointment data
 - [x] Complete API design
 - [x] Include tech stack
 - [x] Complete system design. Include steps to build SQLite data for static data and build a Docker image with static data
-- [ ] Include how to merge static data and dynamic data(real time data) to build a single data structure to serve requests
-- [ ] Add ability turn locally. Include instructions to test the flow
+- [ ] Add the ability to turn locally. Include instructions to test the flow
 - [ ] Add Terraform for AWS deployment
 - [ ] Implement pagination
   - https://www.jsonapi.net/usage/reading/pagination.html
