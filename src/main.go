@@ -1,7 +1,19 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+	"os"
+)
 
 func main() {
-	fmt.Println("hello")
+	port := 8080
+
+	fmt.Println("Curricular API server listing on port:", port)
+
+	err := http.ListenAndServe(fmt.Sprintf(":%d", port), Server)
+	if err != nil {
+		fmt.Println("error starting the sever", err)
+		os.Exit(1)
+	}
 }
