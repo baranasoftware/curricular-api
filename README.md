@@ -37,8 +37,13 @@ with mostly read only data (write-once a day and read-many times a day).
 [Design of a REST API for Curricular data](https://github.com/baranasoftware/system-design/blob/main/edu-api.md)
 
 ## Running Locally
+```
+go run *.go
+Curricular API server listing on port: 8080
+```
 
-TODO
+|||
+
 
 ## API Design
 
@@ -157,7 +162,7 @@ Provide access to students, teachers, classes, courses and appointment data
 - [x] Complete API design
 - [x] Include tech stack
 - [x] Complete system design. Include steps to build SQLite data for static data and build a Docker image with static data
-- [ ] Add the ability to turn locally. Include instructions to test the flow
+- [x] Add the ability to turn locally. Include instructions to test the flow
 - [ ] Add Terraform for AWS deployment
 - [ ] Implement pagination
   - https://www.jsonapi.net/usage/reading/pagination.html

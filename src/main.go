@@ -9,7 +9,7 @@ import (
 func main() {
 	port := 8080
 
-	fmt.Println("Curricular API server listing on port:", port)
+	fmt.Println("Curricular API server is listing on port:", port)
 
 	err := http.ListenAndServe(fmt.Sprintf(":%d", port), Server)
 	if err != nil {
