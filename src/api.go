@@ -12,6 +12,15 @@ func init() {
 	routes := http.NewServeMux()
 	routes.HandleFunc("GET /", root)
 
+	routes.HandleFunc("GET /students", getStudents)
+	routes.HandleFunc("GET /students/search", searchStudents)
+
+	routes.HandleFunc("GET /teachers", getTeachers)
+	routes.HandleFunc("GET /teachers/search", searchTeachers)
+	routes.HandleFunc("GET /teachers/{teacherId}/students", getStudentsForTeacher)
+
+	routes.HandleFunc("GET /classes", getClasses)
+	routes.HandleFunc("GET /classes/{classId}/teachers", getTeachersForClass)
 	Server = routes
 }
 
@@ -21,4 +30,32 @@ func root(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatalln("/ error", err)
 	}
+}
+
+func getStudents(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func searchStudents(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func getTeachers(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func searchTeachers(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func getClasses(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func getTeachersForClass(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func getStudentsForTeacher(w http.ResponseWriter, r *http.Request) {
+
 }
