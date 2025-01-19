@@ -7,6 +7,7 @@ import (
 )
 
 var Server http.Handler
+var store DataStore
 
 func init() {
 	routes := http.NewServeMux()
@@ -24,10 +25,17 @@ func init() {
 
 	routes.HandleFunc("GET /students/export", exportStudents)
 	Server = routes
+
+	numberOfRecords := 10
+	store = NewDataStore(numberOfRecords)
 }
 
 func root(w http.ResponseWriter, r *http.Request) {
 	_, err := fmt.Fprint(w, "Curricular API version: 0.0.1")
+
+	for _, student := range store.Students() {
+		student.Print()
+	}
 
 	if err != nil {
 		log.Fatalln("/ error", err)

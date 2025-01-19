@@ -1,6 +1,9 @@
 package model
 
-import "time"
+import (
+	"fmt"
+	"time"
+)
 
 type Identity struct {
 	Name  string
@@ -18,6 +21,19 @@ type Address struct {
 
 type ResidencyStatus int
 
+func (r ResidencyStatus) String() string {
+	switch r {
+	case Resident:
+		return "Resident"
+	case NonResident:
+		return "NonResident"
+	case Undermined:
+		return "Undermined"
+	default:
+		return "Unknown"
+	}
+}
+
 const (
 	Resident ResidencyStatus = iota
 	NonResident
@@ -32,4 +48,8 @@ type Student struct {
 	Birthdate  time.Time
 	AgeInYears int
 	Residency  ResidencyStatus
+}
+
+func (s Student) Print() {
+	fmt.Printf("student: %+v\n", s)
 }
