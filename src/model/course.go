@@ -9,9 +9,9 @@ const (
 )
 
 type Course struct {
-	Id          string
-	Name        string
-	Term        Term
-	TotalCredit Credit
-	Classes     []Class
+	Id          string  `json:"id"`
+	Name        string  `json:"name"`
+	Term        Term    `json:"term"`
+	TotalCredit Credit  `json:"totalCredit"`
+	Classes     []Class `json:"classes"`
 }

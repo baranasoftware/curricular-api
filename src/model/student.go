@@ -6,17 +6,17 @@ import (
 )
 
 type Identity struct {
-	Name  string
-	Value string
+	Name  string `json:"name"`
+	Value string `json:"value"`
 }
 
 type Address struct {
-	AddressLine1 string
-	AddressLine2 string
-	City         string
-	State        string
-	Country      string
-	ZipCode      string
+	AddressLine1 string `json:"addressLine1"`
+	AddressLine2 string `json:"addressLine2"`
+	City         string `json:"city"`
+	State        string `json:"state"`
+	Country      string `json:"country"`
+	ZipCode      string `json:"zipCode"`
 }
 
 type ResidencyStatus int
@@ -41,13 +41,13 @@ const (
 )
 
 type Student struct {
-	Identities []Identity
-	FirstName  string
-	LastName   string
-	Addresses  []Address
-	Birthdate  time.Time
-	AgeInYears int
-	Residency  ResidencyStatus
+	Identities []Identity      `json:"identities"`
+	FirstName  string          `json:"firstName"`
+	LastName   string          `json:"lastName"`
+	Addresses  []Address       `json:"addresses"`
+	Birthdate  time.Time       `json:"birthdate"`
+	AgeInYears int             `json:"ageInYears"`
+	Residency  ResidencyStatus `json:"residencyStatus"`
 }
 
 func (s Student) Print() {

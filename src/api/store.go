@@ -25,7 +25,6 @@ func NewDataStore(size int) DataStore {
 	for i := 0; i < size; i++ {
 
 		var identities []model.Identity
-
 		for _, idName := range idNames {
 			guid := xid.New()
 			identities = append(identities, model.Identity{
@@ -34,9 +33,28 @@ func NewDataStore(size int) DataStore {
 			})
 		}
 
+		var addresses []model.Address
+		address1 := gofakeit.Address()
+		address2 := gofakeit.Address()
+		addresses = append(addresses,
+			model.Address{
+				AddressLine1: address1.Street,
+				City:         address1.City,
+				State:        address1.State,
+				Country:      address1.Country,
+				ZipCode:      address1.Zip,
+			}, model.Address{
+				AddressLine1: address2.Street,
+				City:         address2.City,
+				State:        address2.State,
+				Country:      address2.Country,
+				ZipCode:      address2.Zip,
+			})
+
 		dob := gofakeit.Date()
 		students = append(students, model.Student{
 			Identities: identities,
+			Addresses:  addresses,
 			FirstName:  gofakeit.FirstName(),
 			LastName:   gofakeit.LastName(),
 			Birthdate:  dob,

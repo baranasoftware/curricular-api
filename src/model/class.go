@@ -7,9 +7,9 @@ type Credit struct {
 }
 
 type Class struct {
-	Id       string
-	Name     string
-	Credit   Credit
-	Location Address
-	Time     time.Time
+	Id       string    `json:"id"`
+	Name     string    `json:"name"`
+	Credit   Credit    `json:"credit"`
+	Location Address   `json:"location"`
+	Time     time.Time `json:"time"`
 }
