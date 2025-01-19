@@ -163,6 +163,8 @@ Provide access to students, teachers, classes, courses and appointment data
 - [x] Include tech stack
 - [x] Complete system design. Include steps to build SQLite data for static data and build a Docker image with static data
 - [x] Add the ability to turn locally. Include instructions to test the flow
+- [ ] Add OAuth2 API: https://github.com/go-oauth2/oauth2
+  - Document how to use OAuth2
 - [ ] Add Terraform for AWS deployment
 - [ ] Implement pagination
   - https://www.jsonapi.net/usage/reading/pagination.html
@@ -171,7 +173,7 @@ Provide access to students, teachers, classes, courses and appointment data
   - Do some design around sorting and filtering through body vs query parameters 
   - https://help.smartsuite.com/en/articles/6963760-sorting-and-filtering-records-in-the-rest-api
   - https://www.jsonapi.net/usage/reading/filtering.html
-  - Implement the parser for the filtering
+  - Implement the parser for filtering
 - [ ] Implement sparse filed selection 
   - https://www.jsonapi.net/usage/reading/sparse-fieldset-selection.html
 - [ ] Implement sorting

@@ -21,6 +21,8 @@ func init() {
 
 	routes.HandleFunc("GET /classes", getClasses)
 	routes.HandleFunc("GET /classes/{classId}/teachers", getTeachersForClass)
+
+	routes.HandleFunc("GET /students/export", exportStudents)
 	Server = routes
 }
 
@@ -57,5 +59,9 @@ func getTeachersForClass(w http.ResponseWriter, r *http.Request) {
 }
 
 func getStudentsForTeacher(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func exportStudents(w http.ResponseWriter, r *http.Request) {
 
 }
