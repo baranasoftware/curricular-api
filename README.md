@@ -16,7 +16,8 @@ effort.
 
 Technologies used in the implementation. `Go` language was used considering its support for building low cost and maintainable
 Cloud Native apps in AWS. `SQLite` was used because this is a high transaction system (500K requests/second) 
-with mostly read-only data (write-once a day and read-many times a day).
+with mostly read-only data (write-once a day and read-many times a day). Note that the implementation here uses a mock 
+datastore([store.go](src/api/store.go)) 
 
 
 * ![Docker](https://img.shields.io/badge/-Docker-eee?style=flat-square&logo=Docker&logoColor=2496ED)
@@ -41,8 +42,130 @@ with mostly read-only data (write-once a day and read-many times a day).
 go run *.go
 Curricular API server listing on port: 8080
 ```
-
-|||
+   
+Example output from `/students`:
+```
+$curl -X GET localhost:8000/students
+[
+  {
+    "identities": [
+      {
+        "name": "emplId",
+        "value": "cu6n5r8tnuc5dvfiniug"
+      },
+      {
+        "name": "libraryId",
+        "value": "cu6n5r8tnuc5dvfiniv0"
+      },
+      {
+        "name": "campusId",
+        "value": "cu6n5r8tnuc5dvfinivg"
+      }
+    ],
+    "firstName": "Tierra",
+    "lastName": "Rice",
+    "addresses": [
+      {
+        "addressLine1": "89876 Mountburgh",
+        "addressLine2": "",
+        "city": "St. Louis",
+        "state": "Arkansas",
+        "country": "Saint Pierre and Miquelon",
+        "zipCode": "75060"
+      },
+      {
+        "addressLine1": "6835 Locksmouth",
+        "addressLine2": "",
+        "city": "St. Louis",
+        "state": "New Mexico",
+        "country": "Bhutan",
+        "zipCode": "44661"
+      }
+    ],
+    "birthdate": "2011-03-29T10:26:47.533935787Z",
+    "ageInYears": 14,
+    "residencyStatus": 2
+  },
+  {
+    "identities": [
+      {
+        "name": "campusId",
+        "value": "cu6n5r8tnuc5dvfinj20"
+      },
+      {
+        "name": "emplId",
+        "value": "cu6n5r8tnuc5dvfinj2g"
+      },
+      {
+        "name": "libraryId",
+        "value": "cu6n5r8tnuc5dvfinj30"
+      }
+    ],
+    "firstName": "Abner",
+    "lastName": "Hansen",
+    "addresses": [
+      {
+        "addressLine1": "225 Villagetown",
+        "addressLine2": "",
+        "city": "Oklahoma",
+        "state": "Tennessee",
+        "country": "Paraguay",
+        "zipCode": "76888"
+      },
+      {
+        "addressLine1": "1841 Lake Fieldmouth",
+        "addressLine2": "",
+        "city": "Dallas",
+        "state": "Vermont",
+        "country": "Liechtenstein",
+        "zipCode": "67213"
+      }
+    ],
+    "birthdate": "1999-10-16T09:29:20.221982237Z",
+    "ageInYears": 26,
+    "residencyStatus": 2
+  },
+  {
+    "identities": [
+      {
+        "name": "campusId",
+        "value": "cu6n5r8tnuc5dvfinj5g"
+      },
+      {
+        "name": "emplId",
+        "value": "cu6n5r8tnuc5dvfinj60"
+      },
+      {
+        "name": "libraryId",
+        "value": "cu6n5r8tnuc5dvfinj6g"
+      }
+    ],
+    "firstName": "Carolyne",
+    "lastName": "Eichmann",
+    "addresses": [
+      {
+        "addressLine1": "26219 Cornersport",
+        "addressLine2": "",
+        "city": "Orlando",
+        "state": "Alabama",
+        "country": "Slovakia",
+        "zipCode": "84322"
+      },
+      {
+        "addressLine1": "457 Passchester",
+        "addressLine2": "",
+        "city": "San Jose",
+        "state": "Iowa",
+        "country": "Somalia",
+        "zipCode": "16710"
+      }
+    ],
+    "birthdate": "1951-12-13T05:20:22.497091342Z",
+    "ageInYears": 74,
+    "residencyStatus": 2
+  }
+]
+```
 
 
 ## API Design
@@ -83,15 +206,15 @@ using [Align-Define-Design Process](https://blog.stoplight.io/aligning-on-your-a
 Provide access to students, teachers, classes, courses and appointment data
 
 #### API Resources
-| Operation Name          | Description                                            | Participants                 | Resource(s) | Emitted Events    | Operation Details                                               | Traits               |
-|-------------------------|--------------------------------------------------------|------------------------------|-------------|-------------------|-----------------------------------------------------------------|----------------------|
-| searchStudents()        | Search Students by student ID, first name and lastname | Teacher, Admin User          | Student     | Students.Searched | __Request Parameters:__ searchQuery    __Returns:__   Student[] | safe   / synchronous |
-| getTeachers()           | View available teachers                                | Teacher, Admin User          | Student     | Teacher.Viewed    | __Request Parameters:__     __Returns:__   Teacher[]            | safe   / synchronous |
-| searchTeachers()        | Search Teachers by empl ID, first name and lastname    | Teacher, Admin User          | Teacher     | Teachers.Searched | __Request Parameters:__ searchQuery    __Returns:__   Teacher[] | safe   / synchronous |
-| getClasses()            | View Classes by class number, name                     | Student                      | Class       | Classes.Searched  | __Request Parameters:__     __Returns:__   Claas[]              | safe   / synchronous |
-| getCourses()            | View available courses                                  | Teacher, Admin User, Student | Course      | Course.Viewed     | __Request Parameters:__    __Returns:__   Student[]   | safe   / synchronous |
-| getTeachersForClass()   | View Classes by teachers                               | Student                      | Teacher     | Teacher.Viewed    | __Request Parameters:__ classId    __Returns:__   Teacher[]     | safe   / synchronous |
-| getStudentsForTeacher() | View Students for teacher                              | Teacher, Admin User          | Student     | Students.Viewed   | __Request Parameters:__ teacherId    __Returns:__   Student[]   | safe   / synchronous |
+| Operation Name          | Description                                            | Participants                 | Resource(s) | Emitted Events    | Operation Details                                                 | Traits               |
+|-------------------------|--------------------------------------------------------|------------------------------|-------------|-------------------|-------------------------------------------------------------------|----------------------|
+| searchStudents()        | Search Students by student ID, first name and lastname | Teacher, Admin User          | Student     | Students.Searched | __Request Parameters:__ searchQuery,    __Returns:__   Student[ ] | safe   / synchronous |
+| getTeachers()           | View available teachers                                | Teacher, Admin User          | Student     | Teacher.Viewed    | __Request Parameters:__,     __Returns:__   Teacher[ ]            | safe   / synchronous |
+| searchTeachers()        | Search Teachers by empl ID, first name and lastname    | Teacher, Admin User          | Teacher     | Teachers.Searched | __Request Parameters:__ searchQuery,    __Returns:__   Teacher[ ] | safe   / synchronous |
+| getClasses()            | View Classes by class number, name                     | Student                      | Class       | Classes.Searched  | __Request Parameters:__,     __Returns:__   Claas[ ]              | safe   / synchronous |
+| getCourses()            | View available courses                                  | Teacher, Admin User, Student | Course      | Course.Viewed     | __Request Parameters:__ ,   __Returns:__   Course[ ]              | safe   / synchronous |
+| getTeachersForClass()   | View Classes by teachers                               | Student                      | Teacher     | Teacher.Viewed    | __Request Parameters:__ classId,    __Returns:__   Teacher[ ]     | safe   / synchronous |
+| getStudentsForTeacher() | View Students for teacher                              | Teacher, Admin User          | Student     | Students.Viewed   | __Request Parameters:__ teacherId,    __Returns:__   Student[ ]   | safe   / synchronous |
 
 #### Modeled Resources   
 
