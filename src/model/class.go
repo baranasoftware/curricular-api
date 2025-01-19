@@ -1,9 +1,20 @@
 package model
 
-import "time"
+import (
+	"fmt"
+	"time"
+)
 
 type Credit struct {
 	credit float64 // provide utility methods without exposing basic type
+}
+
+func (c Credit) String() string {
+	return fmt.Sprintf("%f", c.credit)
+}
+
+func NewCredit(credit float64) Credit {
+	return Credit{credit}
 }
 
 type Class struct {

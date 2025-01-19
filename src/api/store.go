@@ -20,50 +20,121 @@ func NewDataStore(size int) DataStore {
 	ds := DataStore{}
 
 	var students []model.Student
+	var teachers []model.Teacher
+	var classes []model.Class
+
 	idNames := map[int]string{0: "campusId", 1: "emplId", 2: "libraryId"}
+
 	residency := []model.ResidencyStatus{model.Resident, model.NonResident, model.Undermined}
+	type course struct {
+		name   string
+		credit float64
+	}
+	allClasses := map[int]course{
+		0: {
+			name:   "PROGRAMMING I",
+			credit: 3.00,
+		},
+		1: {
+			name:   "DATA SCIENCE PROGRAMMING I",
+			credit: 4.00,
+		},
+		2: {
+			name:   "INTRODUCTION TO DISCRETE MATHEMATICS",
+			credit: 3.00,
+		},
+		3: {
+			name:   "NUMERICAL LINEAR ALGEBRA",
+			credit: 3.00,
+		},
+		4: {
+			name:   "SOFTWARE ENGINEERING",
+			credit: 3.00,
+		},
+		5: {
+			name:   "CONSTRUCTION OF COMPILERS",
+			credit: 3.00,
+		},
+		6: {
+			name:   "PRINCIPLES OF PROGRAMMING LANGUAGES",
+			credit: 3.00,
+		},
+	}
+
 	for i := 0; i < size; i++ {
 
-		var identities []model.Identity
+		var studentIdentities []model.Identity
 		for _, idName := range idNames {
 			guid := xid.New()
-			identities = append(identities, model.Identity{
+			studentIdentities = append(studentIdentities, model.Identity{
 				Name:  idName,
 				Value: guid.String(),
 			})
 		}
 
-		var addresses []model.Address
-		address1 := gofakeit.Address()
-		address2 := gofakeit.Address()
-		addresses = append(addresses,
+		var studentAddresses []model.Address
+		studentAddress1 := gofakeit.Address()
+		studentAddress2 := gofakeit.Address()
+		studentAddresses = append(studentAddresses,
 			model.Address{
-				AddressLine1: address1.Street,
-				City:         address1.City,
-				State:        address1.State,
-				Country:      address1.Country,
-				ZipCode:      address1.Zip,
+				AddressLine1: studentAddress1.Street,
+				City:         studentAddress1.City,
+				State:        studentAddress1.State,
+				Country:      studentAddress1.Country,
+				ZipCode:      studentAddress1.Zip,
 			}, model.Address{
-				AddressLine1: address2.Street,
-				City:         address2.City,
-				State:        address2.State,
-				Country:      address2.Country,
-				ZipCode:      address2.Zip,
+				AddressLine1: studentAddress2.Street,
+				City:         studentAddress2.City,
+				State:        studentAddress2.State,
+				Country:      studentAddress2.Country,
+				ZipCode:      studentAddress2.Zip,
 			})
 
 		dob := gofakeit.Date()
 		students = append(students, model.Student{
-			Identities: identities,
-			Addresses:  addresses,
+			Identities: studentIdentities,
+			Addresses:  studentAddresses,
 			FirstName:  gofakeit.FirstName(),
 			LastName:   gofakeit.LastName(),
 			Birthdate:  dob,
 			AgeInYears: time.Now().Year() - dob.Year(),
 			Residency:  residency[rand.Intn(len(residency))],
 		})
-	}
 
+		var teacherIdentities []model.Identity
+		for _, idName := range idNames {
+			guid := xid.New()
+			teacherIdentities = append(teacherIdentities, model.Identity{
+				Name:  idName,
+				Value: guid.String(),
+			})
+		}
+
+		teachers = append(teachers, model.Teacher{
+			Identities: teacherIdentities,
+			FirstName:  gofakeit.FirstName(),
+			LastName:   gofakeit.LastName(),
+		})
+
+		cls := allClasses[rand.Intn(len(allClasses))]
+		classAddress := gofakeit.Address()
+		classes = append(classes, model.Class{
+			Id:     xid.New().String(),
+			Name:   cls.name,
+			Credit: model.NewCredit(cls.credit),
+			Location: model.Address{
+				AddressLine1: classAddress.Street,
+				City:         classAddress.City,
+				State:        classAddress.State,
+				Country:      classAddress.Country,
+				ZipCode:      classAddress.Zip,
+			},
+			Time: gofakeit.FutureDate(),
+		})
+	}
 	ds.students = students
+	ds.teachers = teachers
+	ds.classes = classes
 
 	return ds
 }
