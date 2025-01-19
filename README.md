@@ -1,7 +1,7 @@
 # Design and Implementation of a REST API for Curricular data in Higher Education
 
-The design and implementation of a REST API for student and course data for a Higher Education institution. Also includes how to implement a
-data-pipeline for mostly static data. This shows how to start with users' needs (user stories) and use that to design
+The design and implementation of a REST API for student and course data for a Higher Education institution.This shows 
+how to start with users' needs (user stories) and use that to design
 the API specification, and finally the implementation. This API design focus on some of the key resources such as
 `/students`, `/teachers`, `/classes`
 and can be extended to include other resources such as `/universities` (if the institution consists of multiple
@@ -16,7 +16,7 @@ effort.
 
 Technologies used in the implementation. `Go` language was used considering its support for building low cost and maintainable
 Cloud Native apps in AWS. `SQLite` was used because this is a high transaction system (500K requests/second) 
-with mostly read only data (write-once a day and read-many times a day).
+with mostly read-only data (write-once a day and read-many times a day).
 
 
 * ![Docker](https://img.shields.io/badge/-Docker-eee?style=flat-square&logo=Docker&logoColor=2496ED)
