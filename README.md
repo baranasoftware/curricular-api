@@ -266,7 +266,7 @@ Provide access to students, teachers, classes, courses and appointment data
 | courseName    | Name of the class                     |
 | termCode      | Term code for this course             |
 | credit        | Total credits for this course         |
-| class[]       | List of courses (of  type `Class`)    |
+| teachers[]    | List of teachers (of  type `Teacher`) |
 
 
 ### Curricular API Design
@@ -288,18 +288,15 @@ Provide access to students, teachers, classes, courses and appointment data
 - [x] Include tech stack
 - [x] Complete system design. Include steps to build SQLite data for static data and build a Docker image with static data
 - [x] Add the ability to turn locally. Include instructions to test the flow
-- [ ] Add OAuth2 API: https://github.com/go-oauth2/oauth2
-  - Document how to use OAuth2
+- [ ] Add OAuth2 API: https://github.com/go-oauth2/oauth2. Document how to use OAuth2
+- [ ] Add a JWT into the API
 - [ ] Add Terraform for AWS deployment
-- [ ] Implement pagination
-  - https://www.jsonapi.net/usage/reading/pagination.html
+- [ ] Implement pagination https://www.jsonapi.net/usage/reading/pagination.html
 - [ ] Implement batch APIs
 - [ ] Implement filtering(searching): document filter/search query langauge
   - Do some design around sorting and filtering through body vs query parameters 
   - https://help.smartsuite.com/en/articles/6963760-sorting-and-filtering-records-in-the-rest-api
   - https://www.jsonapi.net/usage/reading/filtering.html
   - Implement the parser for filtering
-- [ ] Implement sparse filed selection 
-  - https://www.jsonapi.net/usage/reading/sparse-fieldset-selection.html
-- [ ] Implement sorting
-  - https://www.jsonapi.net/usage/reading/sorting.html
+- [ ] Implement sparse filed selection https://www.jsonapi.net/usage/reading/sparse-fieldset-selection.html
+- [ ] Implement sorting https://www.jsonapi.net/usage/reading/sorting.html

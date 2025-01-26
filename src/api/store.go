@@ -22,6 +22,7 @@ func NewDataStore(size int) DataStore {
 	var students []model.Student
 	var teachers []model.Teacher
 	var classes []model.Class
+	var courses []model.Course
 
 	idNames := map[int]string{0: "campusId", 1: "emplId", 2: "libraryId"}
 
@@ -30,34 +31,91 @@ func NewDataStore(size int) DataStore {
 		name   string
 		credit float64
 	}
-	allClasses := map[int]course{
+
+	type subject struct {
+		name    string
+		classes []class
+	}
+	allSubjets := map[int]subject{
 		0: {
-			name:   "PROGRAMMING I",
-			credit: 3.00,
+			name: "Physics",
+			classes: []class{
+				{
+					name:   "PHYSICS 103 — GENERAL PHYSICS",
+					credit: 4.0,
+				},
+				{
+					name:   "PHYSICS 104 — GENERAL PHYSICS",
+					credit: 4.0,
+				},
+				{
+					name:   "PHYSICS 106 — PHYSICS OF SPORTS",
+					credit: 3.0,
+				},
+				{
+					name:   "PHYSICS 120 — SPECIAL TOPICS IN PHYSICS",
+					credit: 3.0,
+				},
+				{
+					name:   "PHYSICS 201 — GENERAL PHYSICS",
+					credit: 5.0,
+				},
+			},
 		},
 		1: {
-			name:   "DATA SCIENCE PROGRAMMING I",
-			credit: 4.00,
-		},
-		2: {
-			name:   "INTRODUCTION TO DISCRETE MATHEMATICS",
-			credit: 3.00,
+			name: "Mathematics",
+			classes: []class{
+				{
+					name:   "MATH 96 — PREPARATORY ALGEBRA",
+					credit: 3.0,
+				},
+				{
+					name:   "MATH 112 — ALGEBRA",
+					credit: 3.0,
+				},
+				{
+					name:   "MATH 113 — TRIGONOMETRY",
+					credit: 3.0,
+				},
+				{
+					name:   "MATH 114 — ALGEBRA AND TRIGONOMETRY",
+					credit: 5.0,
+				},
+				{
+					name:   "MATH 211 — SURVEY OF CALCULUS 1",
+					credit: 4.0,
+				},
+				{
+					name:   "MATH 321 — APPLIED MATHEMATICAL ANALYSIS",
+					credit: 3.0,
+				},
+			},
 		},
 		3: {
-			name:   "NUMERICAL LINEAR ALGEBRA",
-			credit: 3.00,
-		},
-		4: {
-			name:   "SOFTWARE ENGINEERING",
-			credit: 3.00,
-		},
-		5: {
-			name:   "CONSTRUCTION OF COMPILERS",
-			credit: 3.00,
-		},
-		6: {
-			name:   "PRINCIPLES OF PROGRAMMING LANGUAGES",
-			credit: 3.00,
+			name: "Music",
+			classes: []class{
+				{
+					name:   "MUSIC 34 — STUDY ABROAD: MUSIC PERFORMANCE ENSEMBLE",
+					credit: 1.0,
+				},
+				{
+					name:   "CONCERT BAND",
+					credit: 1.0,
+				},
+				{
+					name:   "THE SYMPHONY",
+					credit: 3.0,
+				},
+				{
+					name:   "BASIC CONCEPTS OF MUSIC 2",
+					credit: 3.0,
+				},
+				{
+					name:   "MUSIC 240 — INTERPLAY BETWEEN MUSIC, ART, AND SOCIETY",
+					credit: 3.0,
+				},
+				{},
+			},
 		},
 	}
 
