@@ -3,12 +3,14 @@ package api
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/go-oauth2/oauth2/v4/server"
 	"log"
 	"net/http"
 )
 
 var Server http.Handler
 var store DataStore
+var oauth2Server *server.Server
 
 func init() {
 	routes := http.NewServeMux()
@@ -28,10 +30,17 @@ func init() {
 	routes.HandleFunc("GET /courses/{courseId}/students", getStudentsForCourse)
 
 	routes.HandleFunc("GET /students/export", exportStudents)
+
+	// only for demonstration purposes, in actual setup will be implemented by
+	// the APIGateway -- Apigee
+	routes.HandleFunc("GET /authorize", authorize)
+	routes.HandleFunc("GET /oauth/token", token)
+
 	Server = routes
 
 	numberOfRecords := 20
 	store = NewDataStore(numberOfRecords)
+	oauth2Server = NewOAuth2Manager()
 }
 
 func root(w http.ResponseWriter, r *http.Request) {
