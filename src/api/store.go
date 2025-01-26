@@ -25,99 +25,9 @@ func NewDataStore(size int) DataStore {
 	var courses []model.Course
 
 	idNames := map[int]string{0: "campusId", 1: "emplId", 2: "libraryId"}
+	terms := []model.Term{model.Spring, model.Summer, model.Fall}
 
 	residency := []model.ResidencyStatus{model.Resident, model.NonResident, model.Undermined}
-	type course struct {
-		name   string
-		credit float64
-	}
-
-	type subject struct {
-		name    string
-		classes []class
-	}
-	allSubjets := map[int]subject{
-		0: {
-			name: "Physics",
-			classes: []class{
-				{
-					name:   "PHYSICS 103 — GENERAL PHYSICS",
-					credit: 4.0,
-				},
-				{
-					name:   "PHYSICS 104 — GENERAL PHYSICS",
-					credit: 4.0,
-				},
-				{
-					name:   "PHYSICS 106 — PHYSICS OF SPORTS",
-					credit: 3.0,
-				},
-				{
-					name:   "PHYSICS 120 — SPECIAL TOPICS IN PHYSICS",
-					credit: 3.0,
-				},
-				{
-					name:   "PHYSICS 201 — GENERAL PHYSICS",
-					credit: 5.0,
-				},
-			},
-		},
-		1: {
-			name: "Mathematics",
-			classes: []class{
-				{
-					name:   "MATH 96 — PREPARATORY ALGEBRA",
-					credit: 3.0,
-				},
-				{
-					name:   "MATH 112 — ALGEBRA",
-					credit: 3.0,
-				},
-				{
-					name:   "MATH 113 — TRIGONOMETRY",
-					credit: 3.0,
-				},
-				{
-					name:   "MATH 114 — ALGEBRA AND TRIGONOMETRY",
-					credit: 5.0,
-				},
-				{
-					name:   "MATH 211 — SURVEY OF CALCULUS 1",
-					credit: 4.0,
-				},
-				{
-					name:   "MATH 321 — APPLIED MATHEMATICAL ANALYSIS",
-					credit: 3.0,
-				},
-			},
-		},
-		3: {
-			name: "Music",
-			classes: []class{
-				{
-					name:   "MUSIC 34 — STUDY ABROAD: MUSIC PERFORMANCE ENSEMBLE",
-					credit: 1.0,
-				},
-				{
-					name:   "CONCERT BAND",
-					credit: 1.0,
-				},
-				{
-					name:   "THE SYMPHONY",
-					credit: 3.0,
-				},
-				{
-					name:   "BASIC CONCEPTS OF MUSIC 2",
-					credit: 3.0,
-				},
-				{
-					name:   "MUSIC 240 — INTERPLAY BETWEEN MUSIC, ART, AND SOCIETY",
-					credit: 3.0,
-				},
-				{},
-			},
-		},
-	}
 
 	for i := 0; i < size; i++ {
 
@@ -174,7 +84,8 @@ func NewDataStore(size int) DataStore {
 			LastName:   gofakeit.LastName(),
 		})
 
-		cls := allClasses[rand.Intn(len(allClasses))]
+		crs := allCourses()
+		cls := crs[rand.Intn(len(crs))]
 		classAddress := gofakeit.Address()
 		classes = append(classes, model.Class{
 			Id:     xid.New().String(),
@@ -189,10 +100,20 @@ func NewDataStore(size int) DataStore {
 			},
 			Time: gofakeit.FutureDate(),
 		})
+
+		courses = append(courses, model.Course{
+			Id:       xid.New().String(),
+			Name:     cls.name,
+			Term:     terms[rand.Intn(len(terms))],
+			Credit:   model.NewCredit(cls.credit),
+			Teachers: teachers[:rand.Intn(len(teachers))],
+		})
+
 	}
 	ds.students = students
 	ds.teachers = teachers
 	ds.classes = classes
+	ds.courses = courses
 
 	return ds
 }
@@ -211,4 +132,107 @@ func (d DataStore) Classes() []model.Class {
 
 func (d DataStore) Courses() []model.Course {
 	return d.courses
+}
+
+type course struct {
+	name   string
+	credit float64
+}
+
+type subject struct {
+	name    string
+	courses []course
+}
+
+func allCourses() []course {
+
+	subjects := map[int]subject{
+		0: {
+			name: "Physics",
+			courses: []course{
+				{
+					name:   "PHYSICS 103 — GENERAL PHYSICS",
+					credit: 4.0,
+				},
+				{
+					name:   "PHYSICS 104 — GENERAL PHYSICS",
+					credit: 4.0,
+				},
+				{
+					name:   "PHYSICS 106 — PHYSICS OF SPORTS",
+					credit: 3.0,
+				},
+				{
+					name:   "PHYSICS 120 — SPECIAL TOPICS IN PHYSICS",
+					credit: 3.0,
+				},
+				{
+					name:   "PHYSICS 201 — GENERAL PHYSICS",
+					credit: 5.0,
+				},
+			},
+		},
+		1: {
+			name: "Mathematics",
+			courses: []course{
+				{
+					name:   "MATH 96 — PREPARATORY ALGEBRA",
+					credit: 3.0,
+				},
+				{
+					name:   "MATH 112 — ALGEBRA",
+					credit: 3.0,
+				},
+				{
+					name:   "MATH 113 — TRIGONOMETRY",
+					credit: 3.0,
+				},
+				{
+					name:   "MATH 114 — ALGEBRA AND TRIGONOMETRY",
+					credit: 5.0,
+				},
+				{
+					name:   "MATH 211 — SURVEY OF CALCULUS 1",
+					credit: 4.0,
+				},
+				{
+					name:   "MATH 321 — APPLIED MATHEMATICAL ANALYSIS",
+					credit: 3.0,
+				},
+			},
+		},
+		3: {
+			name: "Music",
+			courses: []course{
+				{
+					name:   "MUSIC 34 — STUDY ABROAD: MUSIC PERFORMANCE ENSEMBLE",
+					credit: 1.0,
+				},
+				{
+					name:   "CONCERT BAND",
+					credit: 1.0,
+				},
+				{
+					name:   "THE SYMPHONY",
+					credit: 3.0,
+				},
+				{
+					name:   "BASIC CONCEPTS OF MUSIC 2",
+					credit: 3.0,
+				},
+				{
+					name:   "MUSIC 240 — INTERPLAY BETWEEN MUSIC, ART, AND SOCIETY",
+					credit: 3.0,
+				},
+			},
+		},
+	}
+
+	var courses []course
+
+	for _, sub := range subjects {
+		courses = append(courses, sub.courses...)
+	}
+
+	return courses
 }

@@ -30,7 +30,7 @@ func init() {
 	routes.HandleFunc("GET /students/export", exportStudents)
 	Server = routes
 
-	numberOfRecords := 10
+	numberOfRecords := 20
 	store = NewDataStore(numberOfRecords)
 }
 
@@ -92,7 +92,13 @@ func getStudentsForTeacher(w http.ResponseWriter, r *http.Request) {
 }
 
 func getCourses(w http.ResponseWriter, r *http.Request) {
+	err := json.NewEncoder(w).Encode(store.Courses())
+	if err != nil {
+		log.Println("error: /courses", err)
+		w.WriteHeader(http.StatusInternalServerError)
+	}
 
+	w.WriteHeader(http.StatusOK)
 }
 
 func getStudentsForCourse(w http.ResponseWriter, r *http.Request) {

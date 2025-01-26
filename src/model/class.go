@@ -1,12 +1,21 @@
 package model
 
 import (
+	"encoding/json"
 	"fmt"
 	"time"
 )
 
 type Credit struct {
 	credit float64 // provide utility methods without exposing basic type
+}
+
+func (c Credit) MarshalJSON() ([]byte, error) {
+	return json.Marshal(c.String())
+}
+
+func (c Credit) UnmarshalJSON(b []byte) error {
+	return json.Unmarshal(b, &c.credit)
 }
 
 func (c Credit) String() string {
