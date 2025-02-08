@@ -4,6 +4,8 @@ import (
 	"curricular-api/api"
 	"flag"
 	"fmt"
+	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/awslabs/aws-lambda-go-api-proxy/httpadapter"
 	"net/http"
 	"os"
 )
@@ -28,5 +30,7 @@ func main() {
 		}
 	} else {
 		// AWS API Gateway
+		// https://github.com/awslabs/aws-lambda-go-api-proxy/
+		lambda.Start(httpadapter.New(http.DefaultServeMux).ProxyWithContext)
 	}
 }

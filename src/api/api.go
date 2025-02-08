@@ -13,6 +13,7 @@ var store DataStore
 var oauth2Server *server.Server
 
 func init() {
+	// for AWS APIGateway routes are mapped using https://github.com/awslabs/aws-lambda-go-api-proxy/
 	routes := http.NewServeMux()
 	routes.HandleFunc("GET /", root)
 

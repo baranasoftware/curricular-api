@@ -19,6 +19,24 @@ resource "aws_api_gateway_resource" "students" {
   path_part   = "students"
 }
 
+resource "aws_api_gateway_method" "students" {
+  rest_api_id      = aws_api_gateway_rest_api.curricular_and_academic_api.id
+  resource_id      = aws_api_gateway_resource.students.id
+  http_method      = "GET"
+  authorization    = "NONE"
+  api_key_required = true
+}
+
+resource "aws_api_gateway_integration" "get_students_integration" {
+  rest_api_id = aws_api_gateway_rest_api.curricular_and_academic_api.id
+  resource_id = aws_api_gateway_resource.students.id
+  http_method = aws_api_gateway_method.students.http_method
+
+  integration_http_method = "GET"
+  type                    = "AWS_PROXY"
+  uri                     = aws_lambda_function.curricular_api.invoke_arn
+}
+
 resource "aws_api_gateway_resource" "student_emplid" {
   rest_api_id = aws_api_gateway_rest_api.curricular_and_academic_api.id
   parent_id   = aws_api_gateway_resource.students.id
@@ -38,7 +56,7 @@ resource "aws_api_gateway_integration" "get_student_integration" {
   resource_id = aws_api_gateway_resource.student_emplid.id
   http_method = aws_api_gateway_method.get_student.http_method
 
-  integration_http_method = "POST"
+  integration_http_method = "GET"
   type                    = "AWS_PROXY"
   uri                     = aws_lambda_function.curricular_api.invoke_arn
 }
@@ -88,7 +106,6 @@ resource "aws_api_gateway_usage_plan" "curricular_and_academic_api" {
   }
 }
 
-
 resource "aws_api_gateway_api_key" "curricular_and_academic_api" {
   name    = "CurricularAcademicApiKey"
   enabled = true
@@ -99,4 +116,3 @@ resource "aws_api_gateway_usage_plan_key" "curricular_and_academic_api" {
   key_type      = "API_KEY"
   usage_plan_id = aws_api_gateway_usage_plan.curricular_and_academic_api.id
 }
-

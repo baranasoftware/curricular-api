@@ -167,6 +167,10 @@ $curl -X GET localhost:8000/students
 ]
 ```
 
+## Invoking API from APIGateway
+```
+curl -X GET -H 'X-API-Key: <API-Key>' https://<api-id>.execute-api.us-east-1.amazonaws.com/curricular-and-academic-api/students/ 
+```
 
 ## API Design
 
@@ -288,9 +292,8 @@ Provide access to students, teachers, classes, courses and appointment data
 - [x] Include tech stack
 - [x] Complete system design. Include steps to build SQLite data for static data and build a Docker image with static data
 - [x] Add the ability to turn locally. Include instructions to test the flow
-- [ ] Add OAuth2 API: https://github.com/go-oauth2/oauth2. Document how to use OAuth2
-- [ ] Add a JWT into the API
-- [ ] Add Terraform for AWS deployment
+- [x] Add Terraform for AWS deployment
+- [ ] Add OAuth2/JWT API for local set up: https://github.com/go-oauth2/oauth2. Document how to use OAuth2
 - [ ] Implement pagination https://www.jsonapi.net/usage/reading/pagination.html
 - [ ] Implement batch APIs
 - [ ] Implement filtering(searching): document filter/search query langauge
