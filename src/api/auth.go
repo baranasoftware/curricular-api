@@ -31,7 +31,7 @@ func authorize(w http.ResponseWriter, r *http.Request) {
 func token(w http.ResponseWriter, r *http.Request) {
 	err := oauth2Server.HandleTokenRequest(w, r)
 	if err != nil {
-		log.Println("error: /token", err)
+		log.Println("error: /oauth/token", err)
 		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
 }

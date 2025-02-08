@@ -39,7 +39,7 @@ datastore([store.go](src/api/store.go))
 
 ## Running Locally
 ```
-go run *.go
+go run main.go
 Curricular API server listing on port: 8080
 ```
    
