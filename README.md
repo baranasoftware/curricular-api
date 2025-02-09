@@ -166,6 +166,16 @@ $curl -X GET localhost:8000/students
   }
 ]
 ```
+             
+## AWS Resources 
+AWS resources were created with [Terraform](./terraform) [using](./Makefile):
+```
+cd src; GOOS=linux GOARCH=amd64 go build -tags lambda.norpc -o bootstrap main.go; \
+cd ../terraform; \
+AWS_PROFILE=<aws-profile> AWS_REGION=us-east-1 terraform init  -var aws_account_ids=[aws-account-ids] -var sec_group=<security-group-id>;\
+AWS_PROFILE=<aws-profile> AWS_REGION=us-east-1 terraform plan  -var aws_account_ids=[aws-account-ids] -var sec_group=<security-group-id>;\
+AWS_PROFILE=<aws-profile> AWS_REGION=us-east-1 terraform apply -var aws_account_ids=[aws-account-ids] -var sec_group=<security-group-id>;
+```
 
 ## Invoking API from APIGateway
 ```
