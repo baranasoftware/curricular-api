@@ -17,3 +17,9 @@ test:
 destroy:
 	cd terraform; \
 	AWS_PROFILE=${AWS_PROFILE} AWS_REGION=us-east-1 terraform destroy -var aws_account_ids=${AWS_ACCOUNT_ID} -var sec_group=${SEC_GROUP};
+
+auth:
+	curl -X GET 'http://localhost:8080/authorize?client_id=000000&response_type=code'
+
+token:
+	curl -X GET 'http://localhost:8080/oauth/token?grant_type=client_credentials&client_id=000000&client_secret=999999&scope=read'

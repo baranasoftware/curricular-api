@@ -9,8 +9,9 @@ import (
 )
 
 var Server http.Handler
-var store DataStore
+var dataStore DataStore
 var oauth2Server *server.Server
+var LocalSetup bool
 
 func init() {
 	// for AWS APIGateway routes are mapped using https://github.com/awslabs/aws-lambda-go-api-proxy/
@@ -40,8 +41,8 @@ func init() {
 	Server = routes
 
 	numberOfRecords := 20
-	store = NewDataStore(numberOfRecords)
-	oauth2Server = NewOAuth2Manager()
+	dataStore = NewDataStore(numberOfRecords)
+	oauth2Server, _ = NewOAuth2Manager()
 }
 
 func root(w http.ResponseWriter, r *http.Request) {
@@ -54,7 +55,7 @@ func root(w http.ResponseWriter, r *http.Request) {
 
 func getStudents(w http.ResponseWriter, r *http.Request) {
 
-	err := json.NewEncoder(w).Encode(store.Students())
+	err := json.NewEncoder(w).Encode(dataStore.Students())
 	if err != nil {
 		log.Println("error: /students", err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -69,7 +70,7 @@ func searchStudents(w http.ResponseWriter, r *http.Request) {
 
 func getTeachers(w http.ResponseWriter, r *http.Request) {
 
-	err := json.NewEncoder(w).Encode(store.Teachers())
+	err := json.NewEncoder(w).Encode(dataStore.Teachers())
 	if err != nil {
 		log.Println("error: /teachers", err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -84,7 +85,7 @@ func searchTeachers(w http.ResponseWriter, r *http.Request) {
 
 func getClasses(w http.ResponseWriter, r *http.Request) {
 
-	err := json.NewEncoder(w).Encode(store.Classes())
+	err := json.NewEncoder(w).Encode(dataStore.Classes())
 	if err != nil {
 		log.Println("error: /classes", err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -102,7 +103,7 @@ func getStudentsForTeacher(w http.ResponseWriter, r *http.Request) {
 }
 
 func getCourses(w http.ResponseWriter, r *http.Request) {
-	err := json.NewEncoder(w).Encode(store.Courses())
+	err := json.NewEncoder(w).Encode(dataStore.Courses())
 	if err != nil {
 		log.Println("error: /courses", err)
 		w.WriteHeader(http.StatusInternalServerError)

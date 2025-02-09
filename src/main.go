@@ -21,6 +21,7 @@ func main() {
 	flag.Parse()
 
 	if *local {
+		api.LocalSetup = true
 		fmt.Println("Curricular API server is listing on port:", *port)
 
 		err := http.ListenAndServe(fmt.Sprintf(":%d", *port), api.Server)
@@ -29,6 +30,7 @@ func main() {
 			os.Exit(1)
 		}
 	} else {
+		api.LocalSetup = false
 		// AWS API Gateway
 		// https://github.com/awslabs/aws-lambda-go-api-proxy/
 		lambda.Start(httpadapter.New(api.Server).ProxyWithContext)
