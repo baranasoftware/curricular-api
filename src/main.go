@@ -31,6 +31,6 @@ func main() {
 	} else {
 		// AWS API Gateway
 		// https://github.com/awslabs/aws-lambda-go-api-proxy/
-		lambda.Start(httpadapter.New(http.DefaultServeMux).ProxyWithContext)
+		lambda.Start(httpadapter.New(api.Server).ProxyWithContext)
 	}
 }

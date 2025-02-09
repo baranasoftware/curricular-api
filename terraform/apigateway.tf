@@ -22,7 +22,7 @@ resource "aws_api_gateway_resource" "proxy" {
 resource "aws_api_gateway_method" "method" {
   rest_api_id      = aws_api_gateway_rest_api.curricular_api.id
   resource_id      = aws_api_gateway_resource.proxy.id
-  http_method      = "GET"
+  http_method      = "ANY" // both GET and POST
   authorization    = "NONE"
   api_key_required = true
 }
@@ -32,7 +32,8 @@ resource "aws_api_gateway_integration" "get_student_integration" {
   resource_id = aws_api_gateway_resource.proxy.id
   http_method = aws_api_gateway_method.method.http_method
 
-  integration_http_method = "GET"
+  // https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-integrations.html
+  integration_http_method = "POST" // Lambda integration is through POST
   type                    = "AWS_PROXY"
   uri                     = aws_lambda_function.curricular_api.invoke_arn
 }

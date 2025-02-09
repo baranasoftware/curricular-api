@@ -13,3 +13,7 @@ terraform:
 
 test:
 	curl -X GET -H 'X-API-Key: ${X_API_KEY}' https://${AWS_API_ID}.execute-api.us-east-1.amazonaws.com/curricular-and-academic-api/students
+
+destroy:
+	cd terraform; \
+	AWS_PROFILE=${AWS_PROFILE} AWS_REGION=us-east-1 terraform destroy -var aws_account_ids=${AWS_ACCOUNT_ID} -var sec_group=${SEC_GROUP};
