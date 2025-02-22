@@ -11,7 +11,8 @@ import (
 )
 
 // AuthNZ functionality is here only for demonstration purposes.
-// In the actual setup, this will be provided by the API Gateway product (e.g. Apigee)
+// In the actual setup, this will be provided by the API Gateway product (e.g. Apigee or AWS APIGateway).
+// So that we only have to focus on implementing logic specific to our use cases (implementing REST resources).
 
 func NewOAuth2Manager() (*server.Server, error) {
 	manager := manage.NewDefaultManager()
@@ -56,16 +57,20 @@ func NewOAuth2Manager() (*server.Server, error) {
 	return srv, nil
 }
 
-func authorize(w http.ResponseWriter, r *http.Request) {
-	err := oauth2Server.HandleAuthorizeRequest(w, r)
+func (c Configuration) register(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func (c Configuration) authorize(w http.ResponseWriter, r *http.Request) {
+	err := c.oauth2Server.HandleAuthorizeRequest(w, r)
 	if err != nil {
 		log.Println("error: /authorize", err)
 		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
 }
 
-func token(w http.ResponseWriter, r *http.Request) {
-	err := oauth2Server.HandleTokenRequest(w, r)
+func (c Configuration) token(w http.ResponseWriter, r *http.Request) {
+	err := c.oauth2Server.HandleTokenRequest(w, r)
 	if err != nil {
 		log.Println("error: /oauth/token", err)
 		http.Error(w, err.Error(), http.StatusBadRequest)

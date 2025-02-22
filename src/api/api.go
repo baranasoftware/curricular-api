@@ -8,44 +8,51 @@ import (
 	"net/http"
 )
 
-var Server http.Handler
-var dataStore DataStore
-var oauth2Server *server.Server
-var LocalSetup bool
+type Configuration struct {
+	dataStore    DataStore
+	oauth2Server *server.Server
+	totalRecords int
+}
 
-func init() {
+func NewConfiguration(n int) Configuration {
+	ds := NewDataStore(n)
+	os, err := NewOAuth2Manager()
+	if err != nil {
+		log.Fatalf("cloud not create OAuth2 Manager: %s", err)
+	}
+
+	return Configuration{ds, os, n}
+}
+
+func Handlers(c Configuration) http.Handler {
 	// for AWS APIGateway routes are mapped using https://github.com/awslabs/aws-lambda-go-api-proxy/
 	routes := http.NewServeMux()
-	routes.HandleFunc("GET /", root)
+	routes.HandleFunc("GET /", c.root)
 
-	routes.HandleFunc("GET /students", getStudents)
-	routes.HandleFunc("GET /students/search", searchStudents)
+	routes.HandleFunc("GET /students", c.getStudents)
+	routes.HandleFunc("GET /students/search", c.searchStudents)
 
-	routes.HandleFunc("GET /teachers", getTeachers)
-	routes.HandleFunc("GET /teachers/search", searchTeachers)
-	routes.HandleFunc("GET /teachers/{teacherId}/students", getStudentsForTeacher)
+	routes.HandleFunc("GET /teachers", c.getTeachers)
+	routes.HandleFunc("GET /teachers/search", c.searchTeachers)
+	routes.HandleFunc("GET /teachers/{teacherId}/students", c.getStudentsForTeacher)
 
-	routes.HandleFunc("GET /classes", getClasses)
-	routes.HandleFunc("GET /classes/{classId}/teachers", getTeachersForClass)
+	routes.HandleFunc("GET /classes", c.getClasses)
+	routes.HandleFunc("GET /classes/{classId}/teachers", c.getTeachersForClass)
 
-	routes.HandleFunc("GET /courses", getCourses)
-	routes.HandleFunc("GET /courses/{courseId}/students", getStudentsForCourse)
+	routes.HandleFunc("GET /courses", c.getCourses)
+	routes.HandleFunc("GET /courses/{courseId}/students", c.getStudentsForCourse)
 
-	routes.HandleFunc("GET /students/export", exportStudents)
+	routes.HandleFunc("GET /students/export", c.exportStudents)
 
 	// only for demonstration purposes, in actual setup will be implemented by
 	// the APIGateway -- Apigee
-	routes.HandleFunc("GET /authorize", authorize)
-	routes.HandleFunc("GET /oauth/token", token)
+	routes.HandleFunc("GET /authorize", c.authorize)
+	routes.HandleFunc("GET /oauth/token", c.token)
 
-	Server = routes
-
-	numberOfRecords := 20
-	dataStore = NewDataStore(numberOfRecords)
-	oauth2Server, _ = NewOAuth2Manager()
+	return routes
 }
 
-func root(w http.ResponseWriter, r *http.Request) {
+func (c Configuration) root(w http.ResponseWriter, r *http.Request) {
 	_, err := fmt.Fprint(w, "Curricular API version: 0.0.1")
 
 	if err != nil {
@@ -53,9 +60,9 @@ func root(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func getStudents(w http.ResponseWriter, r *http.Request) {
+func (c Configuration) getStudents(w http.ResponseWriter, r *http.Request) {
 
-	err := json.NewEncoder(w).Encode(dataStore.Students())
+	err := json.NewEncoder(w).Encode(c.dataStore.Students())
 	if err != nil {
 		log.Println("error: /students", err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -64,13 +71,13 @@ func getStudents(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-func searchStudents(w http.ResponseWriter, r *http.Request) {
+func (c Configuration) searchStudents(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func getTeachers(w http.ResponseWriter, r *http.Request) {
+func (c Configuration) getTeachers(w http.ResponseWriter, r *http.Request) {
 
-	err := json.NewEncoder(w).Encode(dataStore.Teachers())
+	err := json.NewEncoder(w).Encode(c.dataStore.Teachers())
 	if err != nil {
 		log.Println("error: /teachers", err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -79,13 +86,13 @@ func getTeachers(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-func searchTeachers(w http.ResponseWriter, r *http.Request) {
+func (c Configuration) searchTeachers(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func getClasses(w http.ResponseWriter, r *http.Request) {
+func (c Configuration) getClasses(w http.ResponseWriter, r *http.Request) {
 
-	err := json.NewEncoder(w).Encode(dataStore.Classes())
+	err := json.NewEncoder(w).Encode(c.dataStore.Classes())
 	if err != nil {
 		log.Println("error: /classes", err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -94,16 +101,16 @@ func getClasses(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-func getTeachersForClass(w http.ResponseWriter, r *http.Request) {
+func (c Configuration) getTeachersForClass(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func getStudentsForTeacher(w http.ResponseWriter, r *http.Request) {
+func (c Configuration) getStudentsForTeacher(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func getCourses(w http.ResponseWriter, r *http.Request) {
-	err := json.NewEncoder(w).Encode(dataStore.Courses())
+func (c Configuration) getCourses(w http.ResponseWriter, r *http.Request) {
+	err := json.NewEncoder(w).Encode(c.dataStore.Courses())
 	if err != nil {
 		log.Println("error: /courses", err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -112,10 +119,10 @@ func getCourses(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-func getStudentsForCourse(w http.ResponseWriter, r *http.Request) {
+func (c Configuration) getStudentsForCourse(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func exportStudents(w http.ResponseWriter, r *http.Request) {
+func (c Configuration) exportStudents(w http.ResponseWriter, r *http.Request) {
 
 }
