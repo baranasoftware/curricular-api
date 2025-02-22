@@ -1,12 +1,17 @@
 package api
 
 import (
+	"crypto/rand"
+	"encoding/base64"
+	"encoding/json"
 	"github.com/go-oauth2/oauth2/v4/errors"
 	"github.com/go-oauth2/oauth2/v4/manage"
 	"github.com/go-oauth2/oauth2/v4/models"
 	"github.com/go-oauth2/oauth2/v4/server"
 	"github.com/go-oauth2/oauth2/v4/store"
+	"github.com/google/uuid"
 	"log"
+	"math/big"
 	"net/http"
 )
 
@@ -14,7 +19,9 @@ import (
 // In the actual setup, this will be provided by the API Gateway product (e.g. Apigee or AWS APIGateway).
 // So that we only have to focus on implementing logic specific to our use cases (implementing REST resources).
 
-func NewOAuth2Manager() (*server.Server, error) {
+// https://medium.com/@satyendra.jaiswal/securing-apis-oauth-2-0-and-api-keys-best-practices-6d779b00d934
+
+func NewOAuth2Manager() (*server.Server, *store.ClientStore, error) {
 	manager := manage.NewDefaultManager()
 
 	// client memory store
@@ -32,7 +39,7 @@ func NewOAuth2Manager() (*server.Server, error) {
 		Domain: domain,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	manager.MapClientStorage(clientStore)
@@ -54,11 +61,66 @@ func NewOAuth2Manager() (*server.Server, error) {
 		log.Println("response error:", re.Error.Error())
 	})
 
-	return srv, nil
+	return srv, clientStore, nil
 }
 
 func (c Configuration) register(w http.ResponseWriter, r *http.Request) {
 
+	clientId := uuid.New().String()
+
+	byteSize := 32
+	secret, err := randomString(byteSize)
+	if err != nil {
+		log.Println("error: /register", err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+	err = c.clientStore.Set(clientId, &models.Client{
+		ID:     clientId,
+		Secret: secret,
+		Domain: "http://localhost",
+	})
+
+	if err != nil {
+		log.Println("error: /register", err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+	type entry struct {
+		ClientId string `json:"clientId"`
+		Secret   string `json:"secret"`
+	}
+
+	e := entry{
+		ClientId: clientId,
+		Secret:   secret,
+	}
+
+	err = json.NewEncoder(w).Encode(e)
+	if err != nil {
+		log.Println("error: /register", err)
+		w.WriteHeader(http.StatusInternalServerError)
+	}
+	w.WriteHeader(http.StatusOK)
+}
+
+func randomString(n int) (string, error) {
+	const letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+	ret := make([]byte, n)
+	for i := 0; i < n; i++ {
+		num, err := rand.Int(rand.Reader, big.NewInt(int64(len(letters))))
+		if err != nil {
+			return "", err
+		}
+		ret[i] = letters[num.Int64()]
+	}
+
+	return string(ret), nil
+}
+
+func randomStringUrlSafe(n int) (string, error) {
+	b, err := randomString(n)
+	return base64.URLEncoding.EncodeToString([]byte(b)), err
 }
 
 func (c Configuration) authorize(w http.ResponseWriter, r *http.Request) {

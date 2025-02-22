@@ -42,6 +42,15 @@ datastore([store.go](src/api/store.go))
 go run main.go  --local=true --port=8080
 Curricular API server listing on port: 8080
 ```
+
+### Registering a client
+Returns `clientId` and `secret` for subsequent requests.
+
+```
+$curl -X GET localhost:8000/register
+{"clientId":"db72caf4-5002-4c54-967e-55dba9a2704e","secret":"hztUn9rROthCb8gmdtt4gshSlgdaXTuN"}
+```
+
    
 Example output from `/students`:
 ```

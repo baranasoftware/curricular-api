@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/go-oauth2/oauth2/v4/server"
+	"github.com/go-oauth2/oauth2/v4/store"
 	"log"
 	"net/http"
 )
@@ -11,17 +12,18 @@ import (
 type Configuration struct {
 	dataStore    DataStore
 	oauth2Server *server.Server
+	clientStore  *store.ClientStore
 	totalRecords int
 }
 
 func NewConfiguration(n int) Configuration {
-	ds := NewDataStore(n)
-	os, err := NewOAuth2Manager()
+	dataStore := NewDataStore(n)
+	manager, clientStore, err := NewOAuth2Manager()
 	if err != nil {
 		log.Fatalf("cloud not create OAuth2 Manager: %s", err)
 	}
 
-	return Configuration{ds, os, n}
+	return Configuration{dataStore, manager, clientStore, n}
 }
 
 func Handlers(c Configuration) http.Handler {
@@ -45,7 +47,8 @@ func Handlers(c Configuration) http.Handler {
 	routes.HandleFunc("GET /students/export", c.exportStudents)
 
 	// only for demonstration purposes, in actual setup will be implemented by
-	// the APIGateway -- Apigee
+	// the APIGateway -- e.g., Apigee or AWS API Gateway
+	routes.HandleFunc("GET /register", c.register)
 	routes.HandleFunc("GET /authorize", c.authorize)
 	routes.HandleFunc("GET /oauth/token", c.token)
 
