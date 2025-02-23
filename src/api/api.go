@@ -55,23 +55,47 @@ func Handlers(c Configuration) http.Handler {
 	return routes
 }
 
-func (c Configuration) root(w http.ResponseWriter, r *http.Request) {
-	_, err := fmt.Fprint(w, "Curricular API version: 0.0.1")
+func (c Configuration) isAuthorized(r *http.Request) bool {
+	_, err := c.oauth2Server.ValidationBearerToken(r)
 
 	if err != nil {
-		log.Println("error: /", err)
+		return false
+	}
+
+	return true
+}
+
+func (c Configuration) root(w http.ResponseWriter, r *http.Request) {
+
+	// note that this check is not necessary when using through an API Gateway
+	// as the gateway often handles these authNZ functionalities
+	if !c.isAuthorized(r) {
+		log.Println("warn: unauthorized /")
+		w.WriteHeader(http.StatusUnauthorized)
+	} else {
+		_, err := fmt.Fprint(w, "Curricular API version: 0.0.1")
+
+		if err != nil {
+			log.Println("error: /", err)
+		}
 	}
 }
 
 func (c Configuration) getStudents(w http.ResponseWriter, r *http.Request) {
 
-	err := json.NewEncoder(w).Encode(c.dataStore.Students())
-	if err != nil {
-		log.Println("error: /students", err)
-		w.WriteHeader(http.StatusInternalServerError)
+	if !c.isAuthorized(r) {
+		log.Println("warn: unauthorized /students")
+		w.WriteHeader(http.StatusUnauthorized)
+	} else {
+		err := json.NewEncoder(w).Encode(c.dataStore.Students())
+		if err != nil {
+			log.Println("error: /students", err)
+			w.WriteHeader(http.StatusInternalServerError)
+		}
+
+		w.WriteHeader(http.StatusOK)
 	}
 
-	w.WriteHeader(http.StatusOK)
 }
 
 func (c Configuration) searchStudents(w http.ResponseWriter, r *http.Request) {
@@ -80,13 +104,18 @@ func (c Configuration) searchStudents(w http.ResponseWriter, r *http.Request) {
 
 func (c Configuration) getTeachers(w http.ResponseWriter, r *http.Request) {
 
-	err := json.NewEncoder(w).Encode(c.dataStore.Teachers())
-	if err != nil {
-		log.Println("error: /teachers", err)
-		w.WriteHeader(http.StatusInternalServerError)
-	}
+	if !c.isAuthorized(r) {
+		log.Println("warn: unauthorized /students")
+		w.WriteHeader(http.StatusUnauthorized)
+	} else {
+		err := json.NewEncoder(w).Encode(c.dataStore.Teachers())
+		if err != nil {
+			log.Println("error: /teachers", err)
+			w.WriteHeader(http.StatusInternalServerError)
+		}
 
-	w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusOK)
+	}
 }
 
 func (c Configuration) searchTeachers(w http.ResponseWriter, r *http.Request) {
@@ -95,13 +124,18 @@ func (c Configuration) searchTeachers(w http.ResponseWriter, r *http.Request) {
 
 func (c Configuration) getClasses(w http.ResponseWriter, r *http.Request) {
 
-	err := json.NewEncoder(w).Encode(c.dataStore.Classes())
-	if err != nil {
-		log.Println("error: /classes", err)
-		w.WriteHeader(http.StatusInternalServerError)
-	}
+	if !c.isAuthorized(r) {
+		log.Println("warn: unauthorized /classes")
+		w.WriteHeader(http.StatusUnauthorized)
+	} else {
+		err := json.NewEncoder(w).Encode(c.dataStore.Classes())
+		if err != nil {
+			log.Println("error: /classes", err)
+			w.WriteHeader(http.StatusInternalServerError)
+		}
 
-	w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusOK)
+	}
 }
 
 func (c Configuration) getTeachersForClass(w http.ResponseWriter, r *http.Request) {
@@ -113,13 +147,19 @@ func (c Configuration) getStudentsForTeacher(w http.ResponseWriter, r *http.Requ
 }
 
 func (c Configuration) getCourses(w http.ResponseWriter, r *http.Request) {
-	err := json.NewEncoder(w).Encode(c.dataStore.Courses())
-	if err != nil {
-		log.Println("error: /courses", err)
-		w.WriteHeader(http.StatusInternalServerError)
-	}
 
-	w.WriteHeader(http.StatusOK)
+	if c.isAuthorized(r) {
+		err := json.NewEncoder(w).Encode(c.dataStore.Courses())
+		if err != nil {
+			log.Println("error: /courses", err)
+			w.WriteHeader(http.StatusInternalServerError)
+		}
+
+		w.WriteHeader(http.StatusOK)
+	} else {
+		log.Println("warn: unauthorized /courses")
+		w.WriteHeader(http.StatusUnauthorized)
+	}
 }
 
 func (c Configuration) getStudentsForCourse(w http.ResponseWriter, r *http.Request) {

@@ -58,11 +58,12 @@ $ curl -X GET 'http://localhost:8080/authorize?client_id=db72caf4-5002-4c54-967e
 Get the token:
 ```
 $ curl -X GET 'http://localhost:8080/oauth/token?grant_type=client_credentials&client_id=db72caf4-5002-4c54-967e-55dba9a2704e&client_secret=hztUn9rROthCb8gmdtt4gshSlgdaXTuN&scope=read'
+{"access_token":"ZJU3NDNMOWUTOGE3YY0ZNTM5LWFJNZYTZDFJNTDMYJQWZJM0","expires_in":7200,"scope":"read","token_type":"Bearer"}
 ```
 
 Access the resource `/students`:
 ```
-$ curl -X GET localhost:8000/students
+$ curl -X GET -H 'Authorization: Bearer ZJU3NDNMOWUTOGE3YY0ZNTM5LWFJNZYTZDFJNTDMYJQWZJM0' localhost:8000/students
 [
   {
     "identities": [
@@ -314,19 +315,19 @@ Provide access to students, teachers, classes, courses and appointment data
 | /teachers/{teacherId}/students | getStudentsForTeacher() | GET         | View students for a teacher                                                  | teacherId       | Students[]       | 200              |
 
 ## Roadmap
-
 - [x] Complete API design
 - [x] Include tech stack
 - [x] Complete system design. Include steps to build SQLite data for static data and build a Docker image with static data
 - [x] Add the ability to turn locally. Include instructions to test the flow
 - [x] Add Terraform for AWS deployment
-- [ ] Add OAuth2/JWT API for local set up: https://github.com/go-oauth2/oauth2. Document how to use OAuth2
+- [x] Add OAuth2 API for local set up: https://github.com/go-oauth2/oauth2. Document how to use OAuth2.
 - [ ] Implement pagination https://www.jsonapi.net/usage/reading/pagination.html
-- [ ] Implement batch APIs
 - [ ] Implement filtering(searching): document filter/search query langauge
   - Do some design around sorting and filtering through body vs query parameters 
   - https://help.smartsuite.com/en/articles/6963760-sorting-and-filtering-records-in-the-rest-api
   - https://www.jsonapi.net/usage/reading/filtering.html
   - Implement the parser for filtering
-- [ ] Implement sparse filed selection https://www.jsonapi.net/usage/reading/sparse-fieldset-selection.html
 - [ ] Implement sorting https://www.jsonapi.net/usage/reading/sorting.html
+- [ ] Implement sparse filed selection https://www.jsonapi.net/usage/reading/sparse-fieldset-selection.html
+- [ ] Implement batch APIs
+- [ ] Add OAuth2 via JWT: https://github.com/golang-jwt/jwt?tab=readme-ov-file
