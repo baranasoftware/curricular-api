@@ -43,18 +43,26 @@ go run main.go  --local=true --port=8080
 Curricular API server listing on port: 8080
 ```
 
-### Registering a client
-Returns `clientId` and `secret` for subsequent requests.
-
+Registering a client. Returns `clientId` and `secret` for subsequent requests:
 ```
-$curl -X GET localhost:8000/register
+$ curl -X GET localhost:8000/register
 {"clientId":"db72caf4-5002-4c54-967e-55dba9a2704e","secret":"hztUn9rROthCb8gmdtt4gshSlgdaXTuN"}
 ```
-
-   
-Example output from `/students`:
+    
+Authorize the client:
 ```
-$curl -X GET localhost:8000/students
+$ curl -X GET 'http://localhost:8080/authorize?client_id=db72caf4-5002-4c54-967e-55dba9a2704e&response_type=code'
+
+```
+
+Get the token:
+```
+$ curl -X GET 'http://localhost:8080/oauth/token?grant_type=client_credentials&client_id=db72caf4-5002-4c54-967e-55dba9a2704e&client_secret=hztUn9rROthCb8gmdtt4gshSlgdaXTuN&scope=read'
+```
+
+Access the resource `/students`:
+```
+$ curl -X GET localhost:8000/students
 [
   {
     "identities": [

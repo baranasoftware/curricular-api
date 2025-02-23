@@ -16,7 +16,7 @@ import (
 )
 
 // AuthNZ functionality is here only for demonstration purposes.
-// In the actual setup, this will be provided by the API Gateway product (e.g. Apigee or AWS APIGateway).
+// In the actual setup, this will be provided by the API Gateway product (e.g., Apigee or AWS APIGateway).
 // So that we only have to focus on implementing logic specific to our use cases (implementing REST resources).
 
 // https://medium.com/@satyendra.jaiswal/securing-apis-oauth-2-0-and-api-keys-best-practices-6d779b00d934
